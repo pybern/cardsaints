@@ -168,7 +168,38 @@ Only buy hardware (1–2 Bluetooth scanners, ~HKD 200–400 each) if this become
 
 If this becomes a recurring monthly operation, it's worth replacing the sheet with a small web tracker (the repo is already a Next.js app), but for a single release the sheet is faster to stand up and easier for everyone to use.
 
-## 9. Operations Team (minimum viable)
+## 9. Moving Funds: PH → HK
+
+Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle: **collect locally, convert once.**
+
+### Step 1 — Collect domestically in PH
+
+- All buyers pay into **one PH business account** via InstaPay (≤ PHP 50K/transfer) or PESONet (larger amounts). Domestic, near-free, same-day.
+- Never have buyers remit internationally themselves — dozens of retail FX spreads and fees, and reconciliation becomes impossible.
+
+### Step 2 — Convert and remit in 1–2 tranches
+
+**Primary rail: Wise Business (Philippines)** — BSP-licensed, supports PHP → HKD funded via PESONet, mid-market FX rate, automatic volume discounts above USD 25K equivalent, dedicated high-value team for ~USD 500K transfers.
+
+| Rail | Typical all-in cost on PHP ~27M | Notes |
+| --- | --- | --- |
+| Wise Business | ~0.4–0.6% ≈ HKD 15–23K | Mid-market rate; PESONet funding; 1–2 working days |
+| PH bank wire (BDO/BPI/Metrobank) | ~1–2% FX markup ≈ HKD 38–76K | Fallback rail; pre-negotiate FX rate for the size |
+| Crypto/USDT OTC | Low spread | **Avoid** — counterparty + compliance risk at this size |
+
+### Regulatory (BSP)
+
+- Banks may sell FX for outward remittance without prior BSP approval up to **USD 1M/day for corporates** (USD 500K/day for individuals) with an Application to Purchase FX form. Our ~USD 485K fits in one day as a corporate; as an individual it's at the line — remit as a business entity or split over two days.
+- Expect source-of-funds checks at this size: the buyer ledger + King's invoice are the evidence to have ready.
+
+### Do now (not in allocation week)
+
+1. [ ] Open + fully verify Wise Business account and the PH collection account — KYC on a USD 500K corridor takes time.
+2. [ ] Send a small test transfer to King's account to prove the route end-to-end.
+3. [ ] Pre-negotiate a fallback FX rate with a PH bank for the full amount.
+4. [ ] Confirm with King which currency the invoice is in (HKD assumed) and their receiving bank details.
+
+## 10. Operations Team (minimum viable)
 
 Three core people plus outsourced labor at peak moments. Most work concentrates in Oct 23 – early Nov.
 
@@ -186,7 +217,7 @@ Three core people plus outsourced labor at peak moments. Most work concentrates 
 
 **Hard rule:** collections and physical intake peak in the same week — never assign both to one person. Absolute minimum is two people (PH lead also runs collections, since buyer comms and payment chasing are the same conversations), but three is the realistic floor for 1,230 cases.
 
-## 10. Open Questions
+## 11. Open Questions
 
 - Currency confirmation for the 3,072 and 450 figures (assumed HKD).
 - Selling price per case on the PH side — needed to compute margin and break-even fallout rate.
