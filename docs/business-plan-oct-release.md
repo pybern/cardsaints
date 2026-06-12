@@ -188,6 +188,28 @@ Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle
 | Crypto (licensed rails — see below) | ~0.3–1.5% ≈ HKD 11–57K | Same-day to minutes; viability hinges on whether King accepts USDT |
 | Crypto P2P / unlicensed OTC | Low spread on paper | **Avoid** — no legal recourse at this size (see below) |
 
+### How the bank wire actually works, step by step
+
+**Set up now (weeks before allocation):**
+
+1. **Corporate account + RM.** The PH collection account at BDO/BPI/Metrobank, enrolled in corporate online banking, with a named relationship manager. At ~USD 485K you transact with the bank's **treasury/FX desk** through the RM — never at branch board rates.
+2. **Pre-agree the FX terms.** Negotiate a fixed margin over the interbank PHP→HKD rate (often quoted as a PHP→USD→HKD cross) for this transaction size. Ask whether they'll offer a **forward contract** to lock the rate before allocation week — on PHP 27M, a 0.5% rate move is ~PHP 135K, bigger than the wire fees.
+3. **Register King as a beneficiary.** Full legal name exactly as on their bank account, account number, bank name and address, SWIFT/BIC. Get these from King in writing alongside the invoice currency confirmation.
+4. **Pre-stage the paperwork.** BSP **Application to Purchase FX** form (the bank supplies it), King's invoice as the underlying trade document, and the buyer ledger for source-of-funds. Ask the RM up front exactly which documents their compliance wants for a trade payment of this size, so nothing is requested for the first time during allocation week.
+5. **Run a test wire now** (e.g., HKD 5–10K) to King's account — proves beneficiary details, the document chain, and the bank's process end-to-end.
+
+**Execution during allocation week (per tranche):**
+
+1. Buyer payments clear into the collection account — InstaPay (≤ PHP 50K) is 24/7 instant; **PESONet settles in batches on banking days only**, so a buyer paying after the afternoon cutoff credits the next banking day.
+2. Once the balance covers the tranche, call the FX desk via the RM, take the live quote at the agreed margin, and **book the deal** — the rate locks at booking. Same-day value usually requires booking before the desk's cutoff (typically late morning Manila time).
+3. Submit the Application to Purchase FX + invoice; bank debits PHP and sends HKD by SWIFT.
+4. **Charge option "OUR"** so correspondent fees are paid by us and King receives the invoice amount in full — confirm this with King so there's no short-payment dispute. Expect a remittance fee plus correspondent charges, trivial against the FX margin.
+5. Get the **SWIFT MT103 copy** from the bank and send it to King as proof of payment. HKD typically credits King same day to T+1 (PH and HK share a timezone, which helps).
+
+**The calendar wrinkle: Oct 23, 2026 is a Friday.** Allocation confirms Friday; weekend collections arrive via InstaPay only (PESONet sleeps until Monday), and the FX desk is closed Sat–Sun. Realistic earliest wire for the bulk is **Monday Oct 26**, crediting King ~Oct 26–27. That still beats the Oct 30 release, but it means: (a) push buyers hard to pay Friday before PESONet cutoff, (b) consider two tranches — wire whatever has cleared by Friday's cutoff, wire the rest Monday/Tuesday — wire fees are fixed and small, so a second tranche costs almost nothing and de-risks the deadline, and (c) confirm King is fine with payment landing in two parts.
+
+**Optional variant — route via our HK Wise account:** the PH bank wires SWIFT HKD to our HK Wise HKD account details instead of King directly, then we pay King by FPS (instant, free) at the exact moment we choose. Adds a hop and Wise's SWIFT receiving fee, but decouples "money left PH" from "King got paid" — useful if King's invoice timing and our collection timing don't line up cleanly.
+
 ### Wise setup — how to create the accounts, and prerequisites per side
 
 Two separate accounts, one per side. Each is opened under that side's registered business — a PH entity opens Wise Business Philippines, an HK entity opens Wise Business Hong Kong. You cannot run both legs off one account.
@@ -279,7 +301,7 @@ PH corporate bank wire (pre-negotiated FX) as the primary rail for the main tran
 1. [ ] Confirm which registered entities we open Wise under: PH side (DTI sole prop or SEC corporation — gather DTI cert / SEC cert + Articles + GIS + notarised authorisation letter) and HK side (entity with a valid BR certificate).
 2. [ ] Open + verify **both** Wise Business accounts now — PH verification is 2–5 days, but HK extra checks for HKD account details can run up to 60 working days.
 3. [ ] Pay the PHP 1,400 fee for PH local account details; activate HKD details on the HK account.
-4. [ ] **Pre-negotiate the FX rate with a PH bank for the full ~PHP 27M wire — this is now the primary rail**, not the fallback (Wise PH conversion is capped at USD 50K/month).
+4. [ ] **Pre-negotiate the FX rate with a PH bank for the full ~PHP 27M wire — this is now the primary rail**, not the fallback (Wise PH conversion is capped at USD 50K/month). Ask about a forward contract to lock the rate, and get compliance's exact document list for the wire.
 5. [ ] Send a small test transfer end-to-end on every rail we plan to use: PH bank wire → King (or → our HK Wise), and HK Wise → King via FPS (first Wise HKD transfer must be funded by bank transfer, not card).
 6. [ ] Confirm with King which currency the invoice is in (HKD assumed), their receiving bank details, and whether they accept FPS.
 7. [ ] Ask King whether they accept USDT — if yes, onboard with Coins.ph/PDAX (corporate) and run a small test payment to their verified wallet.
