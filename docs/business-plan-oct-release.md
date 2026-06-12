@@ -179,13 +179,13 @@ Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle
 
 ### Step 2 — Convert and remit in 1–2 tranches
 
-> **⚠ Correction to earlier drafts:** Wise Philippines caps PHP → foreign-currency conversion at **USD 10,000 per transfer and USD 50,000 per calendar month** — and the cap applies to **business accounts too** (BSP regulation, per Wise's published PH limits). Wise PH therefore **cannot** carry the ~USD 485K main tranche. Wise stays in the stack, but in a different role (see the Wise setup section below): the PH Wise account handles collections support and small/urgent payments up to the cap; the **bulk conversion moves by PH corporate bank wire** (or the USDT route if King accepts it); an **HK Wise Business account** (requires an HK-registered entity) gives us an HKD operating account to receive funds and pay King instantly via FPS without opening an HK bank account.
+> **⚠ Correction to earlier drafts:** Wise Philippines caps PHP → foreign-currency conversion at **USD 10,000 per transfer and USD 50,000 per calendar month** — and the cap applies to **business accounts too** (BSP regulation, per Wise's published PH limits). Wise PH therefore **cannot** carry the ~USD 485K main tranche. Wise stays in the stack, but in a different role (see the Wise setup section below): the PH Wise account handles collections support and small/urgent payments up to the cap; the **bulk conversion moves by PH corporate bank wire** (King has confirmed cash or bank transfer only, so the cheap direct-USDT route is off the table); an **HK Wise Business account** (requires an HK-registered entity) gives us an HKD operating account to receive funds and pay King instantly via FPS without opening an HK bank account.
 
 | Rail | Typical all-in cost on PHP ~27M | Notes |
 | --- | --- | --- |
 | PH corporate bank wire (BDO/BPI/Metrobank) | ~1–2% FX markup ≈ HKD 38–76K | **Primary rail for the main tranche.** Pre-negotiate the FX rate for the size; fits BSP's USD 1M/day corporate window |
 | Wise Business (PH) | Mid-market + ~0.6% fee | **Capped at USD 10K/transfer, USD 50K/month** — useful only for small/urgent payments, not the main tranche |
-| Crypto (licensed rails — see below) | ~0.3–1.5% ≈ HKD 11–57K | Same-day to minutes; viability hinges on whether King accepts USDT |
+| Crypto Route A (licensed rails — see below) | ~0.45–1.15% ≈ HKD 17–42K | King is fiat-only → full two-hop corridor; cost parity with a negotiated wire, same Mon–Tue landing — **contingency only** |
 | Crypto P2P / unlicensed OTC | Low spread on paper | **Avoid** — no legal recourse at this size (see below) |
 
 ### How the bank wire actually works, step by step
@@ -273,45 +273,67 @@ Two separate accounts, one per side. Each is opened under that side's registered
 - Wise sends HKD → PHP to any PH bank account, up to **PHP 70M per transfer**; large amounts arrive in 1–2 working days.
 - Mobile wallets (GCash, Maya, etc.) are capped at PHP 50K per transfer — fine for small refunds, not bulk.
 
-**Bottom line on Wise's role:** PH Wise = collections support + sub-USD 10K payments. HK Wise = HKD operating account to receive and pay King via FPS instantly. The PHP → HKD conversion of the main tranche itself goes by pre-negotiated PH corporate bank wire (or USDT Route B below).
+**Bottom line on Wise's role:** PH Wise = collections support + sub-USD 10K payments. HK Wise = HKD operating account to receive and pay King via FPS instantly. The PHP → HKD conversion of the main tranche itself goes by pre-negotiated PH corporate bank wire (crypto is contingency only — see below).
 
 ### Crypto routes in detail
 
-**Route A — Licensed stablecoin corridor (PHP → USDT → HKD).**
-PHP → USDT on a BSP-licensed VASP (Coins.ph or PDAX; use their OTC desks — PHP 27M is too big for open order books without slippage) → on-chain transfer (minutes, ~$1) → sell USDT for HKD on an SFC-licensed HK platform (OSL or HashKey; under HK's Stablecoins Ordinance only licensed platforms may handle this) → withdraw HKD via FPS. ~0.5–1.5% all-in, same-day. Requires **two corporate KYC onboardings** and full source-of-funds checks on both sides — doubles the compliance work vs. the bank wire for comparable cost. Only wins on speed.
+> **King's answer (confirmed): cash or bank transfer only — no USDT.** That kills Route B (paying King's wallet directly), which was the cheap, fast version. The only crypto path left is **Route A**, the full two-hop corridor ending in an HKD bank transfer to King. Cash settlement of HKD 3.78M is a non-starter regardless of rail: AML reporting thresholds, physical handling risk, and no payment trail for the customs file.
 
-**Route B — King accepts USDT directly (the route worth pursuing).**
-HK collectibles/TCG wholesalers commonly accept USDT. If King does, the HK off-ramp disappears: PHP → USDT on Coins.ph/PDAX → King's wallet. ~0.3–1% all-in (PH on-ramp only), settlement in **minutes**, and King can be paid within hours of buyer collections — largely dissolving the Oct 23–30 cash-timing squeeze. Controls required: verified wallet address, small test transfer first, proper invoice/receipt from King (no bank trail for customs paperwork otherwise).
-
-### How the USDT route actually works, step by step
-
-**Why it matters more now: crypto settles on weekends.** The bank wire's weak point is the calendar — allocation lands Friday Oct 23, and PESONet + the FX desk sleep until Monday, so the wire credits King ~Oct 26–27 at the earliest. The crypto rails run 24/7: PHP that's inside the VASP account by Friday's PESONet cutoff can be converted to USDT and land in King's wallet **Saturday morning**. The PHP funding leg still depends on banking days (InstaPay ≤ PHP 50K is 24/7, PESONet isn't), so the weekend advantage applies to whatever has been moved into the VASP by Friday — which argues for pre-funding as collections clear rather than in one batch.
-
-**Setup now (onboarding is the long pole, same as Wise):**
-
-1. **Open a corporate account at a BSP-licensed VASP** — Coins.ph Business or PDAX (corporate onboarding starts via prime@pdax.ph). Document set mirrors the Wise PH list: Certificate of Incorporation, Articles, **Board Resolution authorising the account**, GIS, UBO form, legal rep's ID + proof of address. Sole props: DTI registration + BIR 2303 + the owner's verified personal account.
-2. **Get OTC desk access** — PHP 27M is far too big for the open order book. Coins.ph TradeDesk requires a Level 3-verified business account (contact otcdesk_ph@coins.ph); PDAX OTC requires a Prime-level account, minimum trade PHP 1M, and comes with a dedicated relationship manager. Ask both desks during onboarding: quoted spread at PHP 5–10M clip sizes, settlement timing, weekend desk availability, and any corporate withdrawal limits.
-3. **Verify King's wallet properly.** Agree the network in writing (TRC-20 is the usual choice — fees ~USD 1; ERC-20 works but costs more), get the address confirmed over **two separate channels** (e.g., signed invoice + voice call — address-swap fraud is the main attack here), whitelist it in the VASP's withdrawal settings, and send a **test transfer (~USDT 100)** that King confirms receiving before any real money moves.
-4. **Paper trail discipline.** No bank trail exists on this route, so build one: King's invoice stating the USDT amount and wallet address, transaction hashes for every transfer, King's written receipt per payment. This is also the evidence pack for the VASP's source-of-funds checks (buyer ledger + invoice, same as the bank's).
-
-**Execution per tranche:**
-
-1. Move PHP from the collection account to the VASP account via PESONet (same-name transfer, banking days) — ideally daily as collections clear during Oct 23–29, not one lump.
-2. Request an OTC quote (PHP → USDT) from the desk; the quote locks on acceptance, typically settling into the USDT balance within minutes to hours.
-3. Withdraw USDT on-chain to King's whitelisted address with 2FA. On-chain settlement: minutes.
-4. King confirms receipt against the tx hash; mark the tranche paid in the ledger.
-
-**Route A variant (King doesn't accept USDT — add the HK off-ramp):** corporate account at an SFC-licensed HK platform (OSL or HashKey; corporate onboarding via their institutional teams, e.g. global-vip@hashkey.com — onboarding pack + KYB document checklist, expect it to take as long as Wise HK). Sell USDT for HKD on their desk, withdraw HKD via FPS. **Catch:** first fiat withdrawal must go to a **same-name bank account** — which likely means the HK entity needs a real HK corporate bank account after all, partially defeating the point. (Verify during onboarding whether withdrawal to our Wise HK Business account details satisfies the same-name rule — if yes, the loop closes without an HK bank.) This is why Route A only earns its complexity if King refuses USDT **and** the weekend timing matters.
-
-**Sizing the benefit (PHP ~27M):** OTC spread at this size typically ~0.2–0.5%, on-chain fee negligible → Route B all-in roughly **HKD 8–28K vs. HKD 38–76K** at un-negotiated bank rates, plus a 2–3 day timing edge over the weekend. If the bank margin negotiates down to ~0.5%, the cost gap mostly closes and the remaining argument is **speed and the weekend** — still decisive for the Friday-allocation calendar.
+**Route A — Licensed stablecoin corridor (PHP → USDT → HKD → bank transfer to King).**
+PHP → USDT on a BSP-licensed VASP OTC desk (Coins.ph or PDAX — PHP 27M is too big for open order books) → on-chain transfer (minutes, ~USD 1 on TRC-20) → sell USDT for HKD on an SFC-licensed HK platform (OSL or HashKey; under HK's Stablecoins Ordinance only licensed platforms may handle this) → withdraw HKD to a same-name bank account → pay King by FPS/bank transfer.
 
 **Route C — Binance P2P / unlicensed OTC: no.**
 Binance is not BSP-licensed; HK's Stablecoins Ordinance bars unlicensed OTC shops from stablecoin dealing. At USD ~485K: frozen-account risk, counterparty fraud risk, zero recourse.
 
-**Route D — Hybrid (recommended posture).**
-If King accepts USDT: **split by calendar** — whatever PHP is inside the VASP by Friday Oct 23's cutoff goes as USDT over the weekend; the Monday-onward balance goes by bank wire (or also USDT if the first tranche goes smoothly). If King doesn't accept USDT: bank wire primary, Route A onboarded only if the weekend timing proves critical. Either way, Wise accounts on both sides for collections support, the HK-side FPS payment leg, and sub-cap urgent payments — and both rails tested with small transfers before allocation week.
+### Route A total cost of operations — the calculations
 
-**→ Action: ask King this week whether they accept USDT.** If yes, the weekend-split posture above beats fiat-only on both cost and the Friday calendar. If no, the bank wire stays primary.
+**Anchor numbers.** King must receive **HKD 3,778,560**. Assumed mid rates for the worked math (refresh on the day): USD/HKD 7.80, USD/PHP 56.5 → PHP/HKD cross ≈ 7.244. At a frictionless mid rate the transfer would cost **PHP 27.37M**. Every rail is measured by how much *more* PHP it takes to land the same HKD.
+
+**Leg-by-leg cost build-up (on the full amount):**
+
+| # | Leg | Cost assumption | Cost in HKD terms |
+| --- | --- | --- | --- |
+| 1 | PESONet, collection account → VASP (same-name, ~5 tranches) | ~PHP 0–50 per transfer | ~0 |
+| 2 | PHP → USDT on the OTC desk | 0.3–0.7% spread vs. mid¹ | 11.3K – 26.5K |
+| 3 | USDT withdrawal fee + TRC-20 gas (~5 transfers) | ~USDT 5–20 per transfer | 0.2K – 0.8K |
+| 4 | USDT → HKD on OSL/HashKey OTC | 0.15–0.4% spread vs. mid | 5.7K – 15.1K |
+| 5 | HKD withdrawal to bank + FPS to King | ~0–HK$50 | ~0 |
+| | **Total friction** | **~0.45–1.15%** | **~HKD 17K – 42K** |
+
+¹ The PH leg is the expensive one because USDT in PHP routinely trades at a **0.2–0.5% premium** over the USD mid — that premium is the market's price for moving money out of PHP, and it's embedded in the desk's quote. Always compare the quote against the live PHP/USD mid before accepting.
+
+**Worked example at the mid-range (~0.75% all-in):**
+
+1. Start with **PHP 27,580,000** (mid requirement 27.37M grossed up 0.75%).
+2. PH OTC desk converts at 0.5% off mid: 27,580,000 ÷ 56.5 × 0.995 ≈ **USDT 485,700**.
+3. Withdraw on-chain, minus ~USDT 20 fees → **USDT 485,680** lands at the HK platform.
+4. HK desk sells at 0.25% off mid: 485,680 × 7.80 × 0.9975 ≈ **HKD 3,778,830**.
+5. Withdraw and pay King **HKD 3,778,560** by FPS — ~HKD 270 to spare.
+
+Total friction in this scenario: **~PHP 205,000 ≈ HKD 28,300**.
+
+**Head-to-head on the full amount:**
+
+| Rail | All-in friction | HKD cost on 3.78M | When King's HKD lands |
+| --- | --- | --- | --- |
+| Bank wire at board rates (1.5–2%) | worst case | 57K – 76K | Mon Oct 26 booking → Mon–Tue |
+| Bank wire, negotiated margin (0.5–0.75%) | target case | 19K – 28K | Mon Oct 26 booking → Mon–Tue |
+| Route A USDT (0.45–1.15%) | quote-dependent | 17K – 42K | **Also ~Mon–Tue** — see below |
+| ~~Route B (King's wallet)~~ | ~~8K – 28K, Saturday~~ | — | **Dead — King is fiat-only** |
+
+**The timing edge is mostly gone too.** Route B's killer feature was weekend settlement into King's wallet. With King fiat-only, the corridor must exit through the HK platform's fiat withdrawal queue (1–2 business days processing) into a bank account before King can be paid — so the HKD realistically lands Monday–Tuesday, the same as the wire. The USDT itself moves on Saturday, but that just means the money waits in a different queue.
+
+**Operational costs that don't show up in the fee math:**
+
+- **Two corporate KYB onboardings** (Coins.ph Business/TradeDesk or PDAX Prime via prime@pdax.ph on the PH side: SEC docs, board resolution, UBO form; OSL/HashKey institutional onboarding on the HK side, e.g. global-vip@hashkey.com), each with source-of-funds review. Expect the HK side to take as long as Wise HK.
+- **The same-name withdrawal problem:** OSL/HashKey pay fiat out only to a bank account matching the verified corporate name. If the HK entity has no HK corporate bank account, this route is **blocked** — and opening one at an HK bank for a fresh entity is its own slow project. The one escape to verify during onboarding: whether withdrawal to our **Wise HK Business account details** satisfies the same-name rule. If yes, the loop closes; if no, Route A needs an HK bank account the bank wire doesn't need.
+- **Wallet ops controls:** whitelisted addresses, 2FA, two-person checks on every on-chain transfer, tx-hash record-keeping, and a manual paper trail (invoice + hashes + receipts) replacing the bank's MT103.
+- **Minimum deposits / desk minimums:** OSL has had ~HK$10K minimum first deposits; PDAX OTC minimum trade is PHP 1M — neither binds at our size.
+
+**Verdict with King fiat-only:** Route A is **cost-parity at best** with a well-negotiated wire (best case saves ~HKD 10K, worst case costs ~HKD 15–20K *more*), delivers on the same Monday–Tuesday timeline, and carries two extra onboardings plus the same-name bank problem. It is no longer a cost or speed play — it's **contingency insurance** in case the bank rail fails during the window (FX desk repricing, compliance hold, wire rejection). Onboard it only if (a) the Wise-HK-details question resolves the off-ramp, and (b) the onboarding effort doesn't distract from the wire setup.
+
+**Route D — Recommended posture (updated).**
+Bank wire primary, full stop. Spend the negotiating energy on the bank's FX margin — every 0.1% off the margin is ~HKD 3.8K, and the gap between board rates and a negotiated rate (~HKD 38–48K) is bigger than anything Route A can save. Keep Route A as a documented contingency: confirm the Wise-details/same-name question with OSL/HashKey, and only proceed to full onboarding if the answer is yes and the wire setup is already on track. Wise accounts on both sides for collections support, the HK-side FPS payment leg, and sub-cap urgent payments.
 
 ### Regulatory (BSP)
 
@@ -325,8 +347,8 @@ If King accepts USDT: **split by calendar** — whatever PHP is inside the VASP 
 3. [ ] Pay the PHP 1,400 fee for PH local account details; activate HKD details on the HK account.
 4. [ ] **Pre-negotiate the FX rate with a PH bank for the full ~PHP 27M wire — this is now the primary rail**, not the fallback (Wise PH conversion is capped at USD 50K/month). Ask about a forward contract to lock the rate, and get compliance's exact document list for the wire.
 5. [ ] Send a small test transfer end-to-end on every rail we plan to use: PH bank wire → King (or → our HK Wise), and HK Wise → King via FPS (first Wise HKD transfer must be funded by bank transfer, not card).
-6. [ ] Confirm with King which currency the invoice is in (HKD assumed), their receiving bank details, and whether they accept FPS.
-7. [ ] Ask King whether they accept USDT — if yes: onboard corporate with Coins.ph (otcdesk_ph@coins.ph) or PDAX Prime (prime@pdax.ph), get OTC desk quotes at PHP 5–10M clip sizes, confirm weekend desk availability, whitelist King's wallet (verified over two channels, network agreed in writing), and run a ~USDT 100 test payment King confirms.
+6. [ ] Confirm with King which currency the invoice is in (HKD assumed), their receiving bank details, and whether they accept FPS. ~~Ask about USDT~~ — answered: **cash or bank transfer only**.
+7. [ ] Route A contingency (decide, don't default): ask OSL/HashKey whether fiat withdrawal to our **Wise HK Business account details** satisfies their same-name rule. If yes and the wire setup is on track, optionally onboard Coins.ph TradeDesk (otcdesk_ph@coins.ph) or PDAX Prime (prime@pdax.ph) + the HK platform as the backup pipe, with OTC quotes at PHP 5–10M clip sizes and a small end-to-end test run. If no, drop Route A — the bank wire and Wise are the stack.
 
 ## 10. Operations Team (minimum viable)
 
