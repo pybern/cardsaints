@@ -1,6 +1,6 @@
 # Card Saints — October 30 Release: Business & Operations Plan
 
-_Last updated: June 11, 2026_
+_Last updated: June 12, 2026_
 
 ## 1. Snapshot
 
@@ -179,19 +179,84 @@ Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle
 
 ### Step 2 — Convert and remit in 1–2 tranches
 
-**Primary rail: Wise Business (Philippines)** — BSP-licensed, supports PHP → HKD funded via PESONet, mid-market FX rate, automatic volume discounts above USD 25K equivalent, dedicated high-value team for ~USD 500K transfers.
+> **⚠ Correction to earlier drafts:** Wise Philippines caps PHP → foreign-currency conversion at **USD 10,000 per transfer and USD 50,000 per calendar month** — and the cap applies to **business accounts too** (BSP regulation, per Wise's published PH limits). Wise PH therefore **cannot** carry the ~USD 485K main tranche. Wise stays in the stack, but in a different role (see the Wise setup section below): the PH Wise account handles collections support and small/urgent payments up to the cap; the **bulk conversion moves by PH corporate bank wire** (or the USDT route if King accepts it); an **HK Wise Business account** (requires an HK-registered entity) gives us an HKD operating account to receive funds and pay King instantly via FPS without opening an HK bank account.
 
 | Rail | Typical all-in cost on PHP ~27M | Notes |
 | --- | --- | --- |
-| Wise Business | ~0.4–0.6% ≈ HKD 15–23K | Mid-market rate; PESONet funding; 1–2 working days |
-| PH bank wire (BDO/BPI/Metrobank) | ~1–2% FX markup ≈ HKD 38–76K | Fallback rail; pre-negotiate FX rate for the size |
+| PH corporate bank wire (BDO/BPI/Metrobank) | ~1–2% FX markup ≈ HKD 38–76K | **Primary rail for the main tranche.** Pre-negotiate the FX rate for the size; fits BSP's USD 1M/day corporate window |
+| Wise Business (PH) | Mid-market + ~0.6% fee | **Capped at USD 10K/transfer, USD 50K/month** — useful only for small/urgent payments, not the main tranche |
 | Crypto (licensed rails — see below) | ~0.3–1.5% ≈ HKD 11–57K | Same-day to minutes; viability hinges on whether King accepts USDT |
 | Crypto P2P / unlicensed OTC | Low spread on paper | **Avoid** — no legal recourse at this size (see below) |
+
+### Wise setup — how to create the accounts, and prerequisites per side
+
+Two separate accounts, one per side. Each is opened under that side's registered business — a PH entity opens Wise Business Philippines, an HK entity opens Wise Business Hong Kong. You cannot run both legs off one account.
+
+**How to create either account (same flow, fully online):**
+
+1. Go to wise.com (or the app) → Sign up → choose **Business** account.
+2. Enter business details: legal name (must match the registration certificate **exactly** — a spelling mismatch triggers manual review), legal type, business category and activity description, registered + trading addresses, registration number.
+3. Add the people: directors' details, plus every beneficial owner at the ownership threshold (20% in PH, 25% in HK).
+4. Verify the account opener: photo ID + selfie (done on a phone).
+5. Upload the entity documents (lists below) and pay the setup fee where applicable.
+6. After verification, activate the currencies you need (PHP balance + account details on the PH account; HKD on the HK account) and send a **small test transfer** end-to-end.
+
+#### Philippines side — Wise Business PH (BSP-licensed)
+
+| | Prerequisites |
+| --- | --- |
+| Entity types accepted | Freelancer/professional, sole proprietorship, corporation, partnership. Trusts and cooperatives are not onboarded |
+| Sole proprietorship docs | **DTI Certificate of Registration** (hard requirement — no DTI cert, no onboarding); photo ID + selfie of owner |
+| Corporation docs | SEC Certificate of Incorporation; Articles of Incorporation; latest **General Information Sheet (GIS)** showing directors and ultimate beneficial owners; photo IDs of everyone owning ≥20%; **notarised authorisation letter** signed by the corporate secretary authorising the account opener (Wise provides a template) |
+| Fees | Free to register; one-time **PHP 1,400** to unlock local PHP account details |
+| Verification time | Typically 2–5 business days once documents are complete |
+
+**Sending from PH (PHP → HKD) — what you need:**
+
+- Fund transfers by bank transfer or e-wallet to **"Wise Pilipinas Inc"** via InstaPay (≤ PHP 50K) or PESONet (larger amounts).
+- **No third-party pay-ins:** the funding bank account/e-wallet must be in the exact same name as the Wise Business profile.
+- **The binding constraint: USD 10K per transfer / USD 50K per calendar month** for any PHP → foreign-currency conversion (all account types). This is why the main tranche goes by bank wire instead.
+
+**Receiving in PH (PHP account details) — what you need:**
+
+- PHP account details receive **domestic InstaPay only** (max PHP 50K per incoming transfer); no SWIFT/international payments to PHP details.
+- Personal and freelancer accounts are capped at PHP 10M received per month; **registered corporations/sole props/partnerships have no monthly receive cap** — another reason collections must run through a registered business profile, not a personal one.
+- Practical read for us: the PHP 50K-per-transfer ceiling makes Wise PHP details workable as an overflow collection channel for small buyers, but the primary collection account stays a PH bank account (PESONet for large buyer payments).
+
+#### Hong Kong side — Wise Business HK
+
+| | Prerequisites |
+| --- | --- |
+| Hard prerequisite | An **HK-registered business** with a valid Business Registration (BR) certificate. No HK entity → no HK Wise account (confirm which of our HK people has one — likely the same entity that contracts with King) |
+| Entity types accepted | Sole trader, partnership, limited company (these are also the only types that can **send** HKD from Wise) |
+| Sole trader docs | BR certificate; owner's photo ID + personal details |
+| Limited company docs | BR certificate; Certificate of Incorporation; directors' details (name, DOB, country of residence); details + photo ID of every shareholder owning ≥25%; up-to-date registered and operating addresses; authorisation letter if the opener isn't an owner/director |
+| Verification time | 4–7 working days typical; **extra compliance checks for HKD account details can take up to 60 working days** — this is the single best reason to open the account now, not in October |
+
+**Receiving in HK (HKD account details) — what you need:**
+
+- Local FPS receipts are **free and instant**; CHATS costs ~HK$10/transaction; SWIFT receipts in HKD/USD/CNY/EUR also supported. **No receiving limits.**
+- Only HKD, USD, CNY, EUR can land on HKD details — anything else bounces back to the sender.
+- Received funds must be used (withdrawn, sent, or converted) within 90 days — irrelevant for us since money moves to King within days.
+- This is the landing pad if the PH bank wire routes to our own HK entity before paying King, and the receiving account if King ever needs to refund us.
+
+**Sending from HK (paying King in HKD) — what you need:**
+
+- Pay King by local HKD transfer to their account number or **FPS ID** (instant). Limit: **HKD 10M per transfer** — covers our full ~3.78M in one go.
+- The **first** HKD transfer must be funded by bank transfer (to Wise's account or FPS ID `hkd@wise.com`), not by card — build this into the test-transfer step.
+- Funding must come from an HK bank account in the business's own name.
+
+**Reverse direction (HK → PH), if we ever need it (refunds to buyers, PH-side expenses):**
+
+- Wise sends HKD → PHP to any PH bank account, up to **PHP 70M per transfer**; large amounts arrive in 1–2 working days.
+- Mobile wallets (GCash, Maya, etc.) are capped at PHP 50K per transfer — fine for small refunds, not bulk.
+
+**Bottom line on Wise's role:** PH Wise = collections support + sub-USD 10K payments. HK Wise = HKD operating account to receive and pay King via FPS instantly. The PHP → HKD conversion of the main tranche itself goes by pre-negotiated PH corporate bank wire (or USDT Route B below).
 
 ### Crypto routes in detail
 
 **Route A — Licensed stablecoin corridor (PHP → USDT → HKD).**
-PHP → USDT on a BSP-licensed VASP (Coins.ph or PDAX; use their OTC desks — PHP 27M is too big for open order books without slippage) → on-chain transfer (minutes, ~$1) → sell USDT for HKD on an SFC-licensed HK platform (OSL or HashKey; under HK's Stablecoins Ordinance only licensed platforms may handle this) → withdraw HKD via FPS. ~0.5–1.5% all-in, same-day. Requires **two corporate KYC onboardings** and full source-of-funds checks on both sides — doubles the compliance work vs. Wise for comparable cost. Only wins on speed.
+PHP → USDT on a BSP-licensed VASP (Coins.ph or PDAX; use their OTC desks — PHP 27M is too big for open order books without slippage) → on-chain transfer (minutes, ~$1) → sell USDT for HKD on an SFC-licensed HK platform (OSL or HashKey; under HK's Stablecoins Ordinance only licensed platforms may handle this) → withdraw HKD via FPS. ~0.5–1.5% all-in, same-day. Requires **two corporate KYC onboardings** and full source-of-funds checks on both sides — doubles the compliance work vs. the bank wire for comparable cost. Only wins on speed.
 
 **Route B — King accepts USDT directly (the route worth pursuing).**
 HK collectibles/TCG wholesalers commonly accept USDT. If King does, the HK off-ramp disappears: PHP → USDT on Coins.ph/PDAX → King's wallet. ~0.3–1% all-in (PH on-ramp only), settlement in **minutes**, and King can be paid within hours of buyer collections — largely dissolving the Oct 23–30 cash-timing squeeze. Controls required: verified wallet address, small test transfer first, proper invoice/receipt from King (no bank trail for customs paperwork otherwise).
@@ -200,9 +265,9 @@ HK collectibles/TCG wholesalers commonly accept USDT. If King does, the HK off-r
 Binance is not BSP-licensed; HK's Stablecoins Ordinance bars unlicensed OTC shops from stablecoin dealing. At USD ~485K: frozen-account risk, counterparty fraud risk, zero recourse.
 
 **Route D — Hybrid (recommended posture).**
-Wise as primary rail; one licensed crypto rail (Route B if King accepts USDT, else Route A) onboarded and tested as the backup pipe in case Wise verification or daily limits bite during the one-week window.
+PH corporate bank wire (pre-negotiated FX) as the primary rail for the main tranche; one licensed crypto rail (Route B if King accepts USDT, else Route A) onboarded and tested as the backup pipe; Wise accounts on both sides for collections support, the HK-side FPS payment leg, and any sub-cap urgent payments.
 
-**→ Action: ask King this week whether they accept USDT.** If yes, Route B or a Wise+USDT split beats fiat-only. If no, Wise stays primary.
+**→ Action: ask King this week whether they accept USDT.** If yes, Route B or a bank-wire+USDT split beats fiat-only. If no, the bank wire stays primary.
 
 ### Regulatory (BSP)
 
@@ -211,11 +276,13 @@ Wise as primary rail; one licensed crypto rail (Route B if King accepts USDT, el
 
 ### Do now (not in allocation week)
 
-1. [ ] Open + fully verify Wise Business account and the PH collection account — KYC on a USD 500K corridor takes time.
-2. [ ] Send a small test transfer to King's account to prove the route end-to-end.
-3. [ ] Pre-negotiate a fallback FX rate with a PH bank for the full amount.
-4. [ ] Confirm with King which currency the invoice is in (HKD assumed) and their receiving bank details.
-5. [ ] Ask King whether they accept USDT — if yes, onboard with Coins.ph/PDAX (corporate) and run a small test payment to their verified wallet.
+1. [ ] Confirm which registered entities we open Wise under: PH side (DTI sole prop or SEC corporation — gather DTI cert / SEC cert + Articles + GIS + notarised authorisation letter) and HK side (entity with a valid BR certificate).
+2. [ ] Open + verify **both** Wise Business accounts now — PH verification is 2–5 days, but HK extra checks for HKD account details can run up to 60 working days.
+3. [ ] Pay the PHP 1,400 fee for PH local account details; activate HKD details on the HK account.
+4. [ ] **Pre-negotiate the FX rate with a PH bank for the full ~PHP 27M wire — this is now the primary rail**, not the fallback (Wise PH conversion is capped at USD 50K/month).
+5. [ ] Send a small test transfer end-to-end on every rail we plan to use: PH bank wire → King (or → our HK Wise), and HK Wise → King via FPS (first Wise HKD transfer must be funded by bank transfer, not card).
+6. [ ] Confirm with King which currency the invoice is in (HKD assumed), their receiving bank details, and whether they accept FPS.
+7. [ ] Ask King whether they accept USDT — if yes, onboard with Coins.ph/PDAX (corporate) and run a small test payment to their verified wallet.
 
 ## 10. Operations Team (minimum viable)
 
@@ -242,3 +309,5 @@ Three core people plus outsourced labor at peak moments. Most work concentrates 
 - Does the 450/case transport rate include insurance and PH-side duties/taxes, or freight only?
 - Who clears customs and pays duties in PH — us or the buyers?
 - King's exact invoice due date convention (days after invoice vs. before release).
+- Which HK-registered entity (with BR certificate) opens the HK Wise account — and is it the same entity King invoices?
+- PH side: do we register a corporation or run this as a DTI sole proprietorship? (Affects Wise docs, the BSP USD 1M/day corporate FX window, and the no-receive-cap status on collections.)
