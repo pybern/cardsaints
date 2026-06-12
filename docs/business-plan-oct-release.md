@@ -155,6 +155,17 @@ Batch number, ship date, forwarder, tracking/BL number, case IDs included, ETA, 
 4. No case ships unless it is `inspected` + buyer `paid in full`.
 5. Photograph at two points: intake (condition claims vs. King) and outbound packing (transit insurance claims).
 
+### Barcode scanning (phones, no hardware)
+
+Manual entry of 1,230 case IDs at intake and again at outbound is the main source of inventory errors. Scan instead — no dedicated scanners needed for a one-off release:
+
+1. **Pre-print 1,230 QR labels** encoding case IDs 0001–1230 before release week (any Kwai Chung print shop can run them from a CSV).
+2. **Intake (Oct 30):** stick label on carton → scan → status flips to `received`. ~2–3 sec/scan ≈ one hour for the full delivery.
+3. **Outbound:** scan each case onto its shipment batch — the scan is proof it physically left storage.
+4. **Tooling:** Google AppSheet over the existing Google Sheet (free tier, built-in barcode scanning, writes directly to the Master Inventory tab).
+
+Only buy hardware (1–2 Bluetooth scanners, ~HKD 200–400 each) if this becomes a recurring monthly operation.
+
 If this becomes a recurring monthly operation, it's worth replacing the sheet with a small web tracker (the repo is already a Next.js app), but for a single release the sheet is faster to stand up and easier for everyone to use.
 
 ## 9. Open Questions
