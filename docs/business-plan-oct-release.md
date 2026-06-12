@@ -119,7 +119,45 @@ If PH buyers are slow to pay but King's invoice has a short due date, we carry t
 7. [ ] Confirm insurance coverage for storage + transit.
 8. [ ] Prepare PH import paperwork templates.
 
-## 8. Open Questions
+## 8. Inventory Control System
+
+Goal: at any moment, **cases ordered = cases paid = cases allocated = cases shipped + cases on hand**. If that equation breaks, we catch it the same day.
+
+One Google Sheet (shared, edit access limited to 1–2 people), four tabs:
+
+### Tab 1 — Master Inventory (one row per case)
+
+| Column | Notes |
+| --- | --- |
+| Case ID | Sequential 0001–1230; physically label each carton at intake |
+| Status | `expected → received → inspected → allocated → shipped → delivered` |
+| Condition | OK / damaged (link to intake photo) |
+| Buyer | Filled when allocated |
+| Shipment batch | Filled when shipped |
+
+### Tab 2 — Buyer Ledger (one row per buyer)
+
+Buyer, cases ordered, deposit paid, balance due, full payment date, payment status, assigned case IDs, shipment batch. **A case cannot move to `allocated` unless the buyer's payment status is `paid in full`.**
+
+### Tab 3 — Intake Log (Oct 30)
+
+Cartons received vs. King invoice, count per delivery, condition notes, photo links, discrepancies flagged immediately to King while there's still recourse.
+
+### Tab 4 — Shipment Log (one row per batch)
+
+Batch number, ship date, forwarder, tracking/BL number, case IDs included, ETA, arrival confirmation, delivery confirmation per buyer.
+
+### Operating rules
+
+1. Label every carton with its Case ID at intake — physical count must match the sheet before signing the delivery receipt.
+2. Daily reconciliation during Oct 23 – delivery: totals across the four tabs must match.
+3. Status changes only move forward; any correction is logged with a note, never silently edited.
+4. No case ships unless it is `inspected` + buyer `paid in full`.
+5. Photograph at two points: intake (condition claims vs. King) and outbound packing (transit insurance claims).
+
+If this becomes a recurring monthly operation, it's worth replacing the sheet with a small web tracker (the repo is already a Next.js app), but for a single release the sheet is faster to stand up and easier for everyone to use.
+
+## 9. Open Questions
 
 - Currency confirmation for the 3,072 and 450 figures (assumed HKD).
 - Selling price per case on the PH side — needed to compute margin and break-even fallout rate.
