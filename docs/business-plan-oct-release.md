@@ -168,7 +168,25 @@ Only buy hardware (1–2 Bluetooth scanners, ~HKD 200–400 each) if this become
 
 If this becomes a recurring monthly operation, it's worth replacing the sheet with a small web tracker (the repo is already a Next.js app), but for a single release the sheet is faster to stand up and easier for everyone to use.
 
-## 9. Open Questions
+## 9. Operations Team (minimum viable)
+
+Three core people plus outsourced labor at peak moments. Most work concentrates in Oct 23 – early Nov.
+
+| Role | Owns | Load |
+| --- | --- | --- |
+| **Ops lead (HK)** | Freight negotiation, storage, Oct 30 intake, outbound shipment | Bursts; near full-time release week |
+| **Finance / collections** | Buyer ledger, deposits, payment chasing (Oct 23–29), paying King | Critical seat in allocation week |
+| **PH lead** | Buyer comms, customs broker liaison, last-mile distribution | Light until shipment lands, then primary |
+
+**Outsourced, not staffed:**
+
+- Freight forwarder — export/import paperwork and trucking (confirm customs clearance is included in the 450/case rate)
+- PH customs broker — usually the forwarder's local partner
+- 2 temp laborers for intake day only — our people scan and verify counts; hired hands move boxes
+
+**Hard rule:** collections and physical intake peak in the same week — never assign both to one person. Absolute minimum is two people (PH lead also runs collections, since buyer comms and payment chasing are the same conversations), but three is the realistic floor for 1,230 cases.
+
+## 10. Open Questions
 
 - Currency confirmation for the 3,072 and 450 figures (assumed HKD).
 - Selling price per case on the PH side — needed to compute margin and break-even fallout rate.
