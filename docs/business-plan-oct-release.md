@@ -185,7 +185,24 @@ Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle
 | --- | --- | --- |
 | Wise Business | ~0.4–0.6% ≈ HKD 15–23K | Mid-market rate; PESONet funding; 1–2 working days |
 | PH bank wire (BDO/BPI/Metrobank) | ~1–2% FX markup ≈ HKD 38–76K | Fallback rail; pre-negotiate FX rate for the size |
-| Crypto/USDT OTC | Low spread | **Avoid** — counterparty + compliance risk at this size |
+| Crypto (licensed rails — see below) | ~0.3–1.5% ≈ HKD 11–57K | Same-day to minutes; viability hinges on whether King accepts USDT |
+| Crypto P2P / unlicensed OTC | Low spread on paper | **Avoid** — no legal recourse at this size (see below) |
+
+### Crypto routes in detail
+
+**Route A — Licensed stablecoin corridor (PHP → USDT → HKD).**
+PHP → USDT on a BSP-licensed VASP (Coins.ph or PDAX; use their OTC desks — PHP 27M is too big for open order books without slippage) → on-chain transfer (minutes, ~$1) → sell USDT for HKD on an SFC-licensed HK platform (OSL or HashKey; under HK's Stablecoins Ordinance only licensed platforms may handle this) → withdraw HKD via FPS. ~0.5–1.5% all-in, same-day. Requires **two corporate KYC onboardings** and full source-of-funds checks on both sides — doubles the compliance work vs. Wise for comparable cost. Only wins on speed.
+
+**Route B — King accepts USDT directly (the route worth pursuing).**
+HK collectibles/TCG wholesalers commonly accept USDT. If King does, the HK off-ramp disappears: PHP → USDT on Coins.ph/PDAX → King's wallet. ~0.3–1% all-in (PH on-ramp only), settlement in **minutes**, and King can be paid within hours of buyer collections — largely dissolving the Oct 23–30 cash-timing squeeze. Controls required: verified wallet address, small test transfer first, proper invoice/receipt from King (no bank trail for customs paperwork otherwise).
+
+**Route C — Binance P2P / unlicensed OTC: no.**
+Binance is not BSP-licensed; HK's Stablecoins Ordinance bars unlicensed OTC shops from stablecoin dealing. At USD ~485K: frozen-account risk, counterparty fraud risk, zero recourse.
+
+**Route D — Hybrid (recommended posture).**
+Wise as primary rail; one licensed crypto rail (Route B if King accepts USDT, else Route A) onboarded and tested as the backup pipe in case Wise verification or daily limits bite during the one-week window.
+
+**→ Action: ask King this week whether they accept USDT.** If yes, Route B or a Wise+USDT split beats fiat-only. If no, Wise stays primary.
 
 ### Regulatory (BSP)
 
@@ -198,6 +215,7 @@ Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle
 2. [ ] Send a small test transfer to King's account to prove the route end-to-end.
 3. [ ] Pre-negotiate a fallback FX rate with a PH bank for the full amount.
 4. [ ] Confirm with King which currency the invoice is in (HKD assumed) and their receiving bank details.
+5. [ ] Ask King whether they accept USDT — if yes, onboard with Coins.ph/PDAX (corporate) and run a small test payment to their verified wallet.
 
 ## 10. Operations Team (minimum viable)
 
