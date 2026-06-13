@@ -369,7 +369,79 @@ Three core people plus outsourced labor at peak moments. Most work concentrates 
 
 **Hard rule:** collections and physical intake peak in the same week — never assign both to one person. Absolute minimum is two people (PH lead also runs collections, since buyer comms and payment chasing are the same conversations), but three is the realistic floor for 1,230 cases.
 
-## 11. Open Questions
+## 11. Long-term Structural Model: Three Options Compared
+
+This evaluates the operation as a **repeatable, long-term, legal, and safe** business — not just the one Oct 30 release. Three constraints frame every option:
+
+- **King onboards HK companies only** → an HK company is mandatory in any model. King's counterparty cannot be a PH entity or an individual.
+- **There is no Philippines–Hong Kong double-tax treaty in force** (negotiations opened in 2025, not yet signed/ratified). So there is **no permanent-establishment (PE) protection and no treaty relief from double taxation** — if PH deems HK Co to be earning PH-source income, PH can tax it at 25% with no treaty offset. This single fact penalises any structure where the HK company sells *into* PH.
+- **"Long-term, legal, safe" is the priority** over squeezing the last basis point of cost — that rules the third option out as a primary model.
+
+### Summary
+
+| | **Model 1** — HK Co receives & sells; PH Co distributes only | **Model 2** — PH Co receives & sells; remits to HK Co | **Model 3** — PH individual → crypto → HK individual |
+| --- | --- | --- | --- |
+| Where the buyer sale happens | Hong Kong (HK Co exports to PH buyers) | Philippines (PH Co sells domestically) | Informal / personal |
+| Who collects from buyers | HK Co, cross-border (card/intl transfer) | PH Co, domestic (InstaPay/PESONet) | PH individual, personal |
+| Where profit lands | Hong Kong (low tax) | Split PH/HK via transfer pricing | Unreported |
+| Collection cost & friction | High (3.9–5.9% cards, or retail FX per buyer) | **Lowest (near-free domestic)** | Low on paper |
+| VAT treatment | Leaky (non-resident can't recover PH input VAT) | **Clean (import VAT credited vs. output VAT)** | Evaded / undeclared |
+| Tax efficiency | Best **if** PE risk is managed | Moderate (two layers, but defensible) | "Best" only by evasion |
+| PE / legal risk (no treaty) | **High** | **Low** | Severe (criminal) |
+| Timing fit for Oct 23–30 | Poor (cross-border settlement) | **Best (instant domestic)** | Fast but unsafe |
+| Long-term / scalable / safe | Conditional | **Yes** | **No** |
+
+### Model 1 — HK Co receives payment and sends to PH Co for distribution only
+
+**Flow:** King → HK Co buys. HK Co sells to PH buyers and receives their payments. Goods ship to PH; PH Co clears customs and does last-mile delivery as HK Co's agent. HK Co pays King.
+
+- **Tax:** Profit concentrates in HK Co (8.25% on first HKD 2M assessable profit, 16.5% above) — attractive on paper. PH Co earns only a cost-plus distribution fee, taxed on a thin PH base.
+- **The PE problem (the killer here):** with **no PH–HK treaty**, a PH "distribution-only" arm that habitually sells/collects on HK Co's behalf can create a **PH permanent establishment**, letting BIR tax HK Co's PH-source profit at 25% — exactly the profit we tried to keep in HK — with no treaty relief and double-tax exposure. Avoiding PE requires PH Co to be a genuinely limited-risk *reseller* (i.e. it buys and resells) — which is mechanically Model 2, not "distribution only."
+- **VAT leakage:** if HK Co owns the goods at import, a non-resident generally cannot recover the 12% PH import VAT, and the output-VAT chain on the buyer sale is messy. Real cost, not just paperwork.
+- **Collection:** buyers pay an HK company cross-border — back to Stripe (3.9–5.9% + freeze risk, see §9 alternative) or per-buyer international transfers (retail FX + reconciliation chaos). An HK company cannot hold a PH *domestic* acquiring/collection account without a PH presence.
+- **Operations:** HK Co runs buyer-facing sales + cross-border reconciliation; PH Co stays light. But the lightness is what triggers the PE/VAT problems.
+- **Timing:** cross-border collection settles slower — poor fit for the tight Oct 23–30 window.
+- **Prerequisites:** HK Co with a payment-acceptance method; PH Co registered as distributor/agent; a defensible PE analysis and transfer-pricing file for the service fee; a workable cross-border collection rail.
+
+### Model 2 — PH Co receives and transfers to HK Co (recommended chassis)
+
+**Flow:** King → HK Co buys. HK Co sells/exports the goods to PH Co (intercompany). PH Co is importer of record, sells domestically to PH buyers, collects PHP locally, and remits the import payment to HK Co. HK Co pays King via FPS.
+
+- **Tax:** two layers, but each clean and standard. **PH side:** corporate income tax (20% for a small domestic corp with net taxable income ≤ PHP 5M and assets ≤ PHP 100M, else 25%), 12% output VAT on domestic sales, customs duties + 12% import VAT — and **the import VAT is creditable against output VAT**, so VAT is largely pass-through, not a sunk cost. **HK side:** profits tax on HK Co's margin (8.25%/16.5%).
+- **No PE risk:** HK Co merely sells goods to PH Co at arm's length and never operates in PH, so there's no PH-source selling income to tax — the no-treaty problem mostly disappears.
+- **Collection:** all domestic — InstaPay/PESONet into one PH business account, near-free and same-day. Best possible collection cost and reconciliation.
+- **Remittance:** one outward leg, PH Co → HK Co, framed as a trade/import payment (BSP FX Manual §6), inside the **USD 1M/day corporate window** with King's/HK Co's invoice + shipping docs (or a licensed USDT rail as backup).
+- **Transfer pricing is the dial:** the HK Co → PH Co price decides how much margin sits in low-tax HK vs. PH. It must be arm's-length and documented (PH TP rules + BIR Form 1709 related-party disclosure; HK TP rules too) — but within that band you can legally lean profit toward HK. **This is how Model 2 captures most of Model 1's tax benefit without Model 1's PE/VAT/collection problems.**
+- **Operations:** PH Co does real work (import, sell, collect, remit) and needs proper BIR bookkeeping — but it's the standard import-and-distribute structure every legitimate PH importer runs.
+- **Timing:** best fit — domestic collection is instant, and the single funding remittance can be pre-tested before allocation week.
+- **Prerequisites:** HK Co (King's counterparty + Wise/HK bank, FPS); PH Co as an **SEC corporation** (USD 1M/day FX window, limited liability, no receive cap) with BIR/VAT registration, import accreditation, and a bank trade-FX line; a transfer-pricing file; a customs broker.
+
+### Model 3 — PH individual sends crypto to an HK individual to buy and ship
+
+**Flow:** a PH individual buys USDT, sends it to an HK individual, who buys from King and ships to PH.
+
+- **It fails the gating constraint immediately:** King onboards **companies**, not individuals — so an HK *individual* cannot be King's counterparty. To make it work you'd still need an HK company, at which point this is just an undocumented version of Model 1/2.
+- **Not legal/safe as a model:**
+  - **Tax:** income unreported on both sides is **tax evasion** (PH BIR and HK IRD), with criminal exposure — the opposite of the stated "legal" goal.
+  - **AML / frozen funds:** individual-to-individual crypto at ~USD 485K trips VASP and bank AML controls (PH BSP-licensed VASPs, HK Stablecoins Ordinance restricting unlicensed stablecoin dealing); accounts get frozen and source-of-funds challenged, with no recourse.
+  - **No limited liability, no contracts:** if the HK individual disappears with the funds, there is no legal protection.
+  - **Customs:** goods still must clear PH customs; informal/under-declared import is smuggling.
+  - **Not scalable:** you cannot build a durable brand or banking relationships on personal crypto transfers.
+- **Only genuine upside:** speed and headline cost. Both are capturable *legally* by using a **licensed crypto rail as the remittance leg inside Model 2** (PH Co → HK Co via a licensed VASP) — which keeps the speed without the evasion.
+- **Verdict:** unsuitable as the long-term model. Salvage only its crypto rail, inside a proper corporate structure.
+
+### Recommendation
+
+**Adopt Model 2 as the chassis, and use transfer pricing to get Model 1's tax efficiency safely.** Models 1 and 2 are not really independent choices: the only legal way to run "profit in HK" without a PE is to make PH Co a limited-risk reseller — which is operationally Model 2. So build Model 2 once and tune the HK↔PH margin within arm's-length limits:
+
+1. **Two entities, built to last:** HK Co (King's counterparty, pays King, holds HK banking/FPS) + PH Co (SEC corporation: domestic collection, importer of record, BIR/VAT-registered).
+2. **Money path:** PH buyers → PH Co (domestic PHP) → PH Co remits to HK Co (trade-FX import payment, corporate window; licensed USDT as tested backup) → HK Co pays King (FPS).
+3. **Set transfer pricing deliberately** with a PH+HK accountant; keep the related-party file and BIR Form 1709 ready. This is where long-term tax is won or lost.
+4. **Price the full two-layer tax + duty load into each case** before quoting buyers; it dwarfs the ~1–2% remittance cost.
+5. **Keep irreversible rails** (domestic transfer in, bank wire/USDT out) — never card for the main tranche.
+6. **Engage professionals now:** PH accountant + customs broker, and HK tax advice on the two-tier rate and any offshore-profits position.
+
+## 12. Open Questions
 
 - Currency confirmation for the 3,072 and 450 figures (assumed HKD).
 - Selling price per case on the PH side — needed to compute margin and break-even fallout rate.
