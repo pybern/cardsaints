@@ -174,13 +174,17 @@ Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle
 
 ### Entity & payment structure (the backbone decision)
 
-**Yes — registering a PH company is the right backbone, and it can pay King directly.** This deal is an **importation**: a PH buyer paying an overseas supplier (King) for goods. BSP rules explicitly let banks sell foreign currency to a resident company to pay for imports (FX Manual, Section 6 — trade transactions). So the cleanest structure is:
+**Constraint that fixes the structure: King only onboards HK companies.** That means King's counterparty *must* be an HK company — we cannot have a PH entity buy from and pay King directly. So this is a **two-entity structure**, and the HK company is mandatory (not optional):
 
-> **PH company = importer of record.** It collects from PH buyers domestically (InstaPay/PESONet into one PH bank account), then **buys the cases from King and pays King directly** in HKD/USD through its PH bank's trade-FX desk. The goods ship HK → PH anyway, so the PH company is genuinely the importer.
+> **HK company** — King's customer. Buys the 1,230 cases from King and pays King in HKD via FPS (the easy leg). Likely the same entity that holds the Wise Business HK account.
+>
+> **PH company (SEC corporation)** — collects from PH buyers domestically (InstaPay/PESONet into one PH bank account), is the importer of record into PH, and **remits to the HK company** to fund the King payment.
 
-This may let us **skip routing funds through our own HK entity first.** "Start a PH company and pay King" can be the whole money path, not "collect in PH → wire to ourselves in HK → pay King."
+**Money path:** PH buyers → PHco (PHP, domestic, near-free) → **PHco remits to HKco** → HKco pays King (FPS).
 
-**Corporation (SEC) beats sole proprietorship (DTI) for this:**
+**The PHco → HKco leg is still a legitimate trade-FX payment.** Goods flow King → HKco → PHco → PH buyers, so PHco buying from HKco is an importation. BSP lets a PH bank sell FX to a resident company to pay for imports (FX Manual, Section 6), within the **USD 1M/day corporate window** with supporting docs (HKco's commercial invoice + shipping/import docs). So the remittance mechanics from the rest of Section 9 (corporate bank wire as primary rail; USDT as backup if usable) apply to the PHco → HKco leg.
+
+**On the PH side, incorporate (SEC) — don't just register a DTI sole proprietorship:**
 
 | | DTI sole proprietorship | SEC corporation |
 | --- | --- | --- |
@@ -189,13 +193,16 @@ This may let us **skip routing funds through our own HK entity first.** "Start a
 | Wise/bank monthly receive cap on collections | No cap (registered) | No cap (registered) |
 | Liability / bank & supplier credibility for ~PHP 28M | Owner personally liable | Limited liability; banks prefer it at this size |
 
-Above either threshold you don't lose the ability to remit — you just attach supporting documents (King's invoice + shipping docs + the buyer ledger), all of which we have. But the corporate USD 1M/day window keeps the main tranche frictionless, so **incorporate (SEC), don't just register a DTI sole prop.**
+Above either threshold you don't lose the ability to remit — you just attach supporting documents — but the corporate USD 1M/day window keeps the main tranche frictionless.
 
-**Keep an HK entity only if needed.** If the PH company imports and pays King directly, the HK entity is optional — keep it only if King insists on contracting with a local HK counterparty, or for the Wise HK / FPS convenience of paying King. Don't stand up two entities if one importer does the job.
+**The real cost of "doing it legally" is tax, and now there are two layers.** Because the margin is split across two companies:
+- **HK side:** Hong Kong profits tax on HKco's margin (8.25% on the first HKD 2M of assessable profits, 16.5% above, under the two-tier regime). An offshore-profits claim is possible but fact-specific — don't assume it.
+- **PH side:** PHco owes corporate income tax (20–25%), VAT (12%) or percentage tax on its sales to buyers, **plus import duties and 12% import VAT collected at PH customs** on the ~PHP 27M landed value.
+- **Transfer pricing:** the HKco → PHco price has to be defensible (arm's length); set the inter-company margin deliberately with an accountant, since it drives where profit (and tax) lands.
 
-**The real cost of "doing it legally" is tax, not FX.** A registered PH trading company owes: corporate income tax (20–25%), VAT (12%) or percentage tax on sales, **plus import duties and 12% VAT on the importation collected at PH customs** on the ~PHP 27M landed value. These dwarf the ~1–2% remittance cost and must be modelled into the per-case price before quoting buyers. **Engage a PH accountant/customs broker now** — this is the part to get professional advice on, not the wire mechanics.
+These tax/duty costs dwarf the ~1–2% remittance cost and **must be priced into each case before quoting buyers. Engage a PH accountant + customs broker (and confirm the HK tax treatment) now** — this, not the wire mechanics, is the part that needs professional advice.
 
-**Timing:** SEC incorporation + BIR registration takes weeks, and bank trade-FX onboarding adds more — start the company formation **now**, well before allocation week.
+**Timing:** confirm the HK company is in good standing and onboarded with King; SEC incorporation + BIR registration of PHco takes weeks, and bank trade-FX onboarding adds more — start PHco formation **now**, well before allocation week.
 
 ### Step 1 — Collect domestically in PH
 
@@ -371,5 +378,6 @@ Three core people plus outsourced labor at peak moments. Most work concentrates 
 - King's exact invoice due date convention (days after invoice vs. before release).
 - Which HK-registered entity (with BR certificate) opens the HK Wise account — and is it the same entity King invoices?
 - PH side: do we register a corporation or run this as a DTI sole proprietorship? **Leaning SEC corporation** (USD 1M/day corporate FX window vs. USD 500K/day for a sole prop, limited liability, bank credibility) — see "Entity & payment structure" in Section 9. Confirm with a PH accountant.
-- Can the PH company import and pay King directly via bank trade-FX (Section 6 FX Manual), making a separate HK entity optional? Confirm with King (do they require an HK counterparty?) and the PH bank's trade desk.
-- What are the all-in PH tax/import costs (corporate income tax, VAT/percentage tax, customs duties + 12% import VAT on ~PHP 27M)? Needed to price each case — get a PH accountant/customs broker engaged now.
+- ~~Can the PH company pay King directly?~~ **Resolved: no — King only onboards HK companies, so the HK entity is King's mandatory counterparty.** Structure is HKco (pays King) + PHco (collects + remits to HKco). The PHco → HKco leg is the trade-FX import payment.
+- Transfer pricing: what inter-company margin do we set on the HKco → PHco sale, and how does it split tax between HK profits tax and PH income tax? (Accountant call.)
+- What are the all-in two-layer tax/import costs (HK profits tax on HKco; PH corporate income tax, VAT/percentage tax, customs duties + 12% import VAT on ~PHP 27M)? Needed to price each case — get a PH accountant/customs broker + HK tax advice engaged now.
