@@ -172,6 +172,31 @@ If this becomes a recurring monthly operation, it's worth replacing the sheet wi
 
 Total to move: ~HKD 3,778,560 (≈ PHP 27–28M, ≈ USD 485K). Design principle: **collect locally, convert once.**
 
+### Entity & payment structure (the backbone decision)
+
+**Yes — registering a PH company is the right backbone, and it can pay King directly.** This deal is an **importation**: a PH buyer paying an overseas supplier (King) for goods. BSP rules explicitly let banks sell foreign currency to a resident company to pay for imports (FX Manual, Section 6 — trade transactions). So the cleanest structure is:
+
+> **PH company = importer of record.** It collects from PH buyers domestically (InstaPay/PESONet into one PH bank account), then **buys the cases from King and pays King directly** in HKD/USD through its PH bank's trade-FX desk. The goods ship HK → PH anyway, so the PH company is genuinely the importer.
+
+This may let us **skip routing funds through our own HK entity first.** "Start a PH company and pay King" can be the whole money path, not "collect in PH → wire to ourselves in HK → pay King."
+
+**Corporation (SEC) beats sole proprietorship (DTI) for this:**
+
+| | DTI sole proprietorship | SEC corporation |
+| --- | --- | --- |
+| BSP outward-FX no-extra-docs threshold | USD 500K/day (treated as an **individual** — a sole prop isn't a separate legal person) | **USD 1M/day** (corporate/"other juridical entity") |
+| Our ~USD 485K tranche | Just under the line — risky, one buyer top-up tips it over | Comfortable headroom in one day |
+| Wise/bank monthly receive cap on collections | No cap (registered) | No cap (registered) |
+| Liability / bank & supplier credibility for ~PHP 28M | Owner personally liable | Limited liability; banks prefer it at this size |
+
+Above either threshold you don't lose the ability to remit — you just attach supporting documents (King's invoice + shipping docs + the buyer ledger), all of which we have. But the corporate USD 1M/day window keeps the main tranche frictionless, so **incorporate (SEC), don't just register a DTI sole prop.**
+
+**Keep an HK entity only if needed.** If the PH company imports and pays King directly, the HK entity is optional — keep it only if King insists on contracting with a local HK counterparty, or for the Wise HK / FPS convenience of paying King. Don't stand up two entities if one importer does the job.
+
+**The real cost of "doing it legally" is tax, not FX.** A registered PH trading company owes: corporate income tax (20–25%), VAT (12%) or percentage tax on sales, **plus import duties and 12% VAT on the importation collected at PH customs** on the ~PHP 27M landed value. These dwarf the ~1–2% remittance cost and must be modelled into the per-case price before quoting buyers. **Engage a PH accountant/customs broker now** — this is the part to get professional advice on, not the wire mechanics.
+
+**Timing:** SEC incorporation + BIR registration takes weeks, and bank trade-FX onboarding adds more — start the company formation **now**, well before allocation week.
+
 ### Step 1 — Collect domestically in PH
 
 - All buyers pay into **one PH business account** via InstaPay (≤ PHP 50K/transfer) or PESONet (larger amounts). Domestic, near-free, same-day.
@@ -345,4 +370,6 @@ Three core people plus outsourced labor at peak moments. Most work concentrates 
 - Who clears customs and pays duties in PH — us or the buyers?
 - King's exact invoice due date convention (days after invoice vs. before release).
 - Which HK-registered entity (with BR certificate) opens the HK Wise account — and is it the same entity King invoices?
-- PH side: do we register a corporation or run this as a DTI sole proprietorship? (Affects Wise docs, the BSP USD 1M/day corporate FX window, and the no-receive-cap status on collections.)
+- PH side: do we register a corporation or run this as a DTI sole proprietorship? **Leaning SEC corporation** (USD 1M/day corporate FX window vs. USD 500K/day for a sole prop, limited liability, bank credibility) — see "Entity & payment structure" in Section 9. Confirm with a PH accountant.
+- Can the PH company import and pay King directly via bank trade-FX (Section 6 FX Manual), making a separate HK entity optional? Confirm with King (do they require an HK counterparty?) and the PH bank's trade desk.
+- What are the all-in PH tax/import costs (corporate income tax, VAT/percentage tax, customs duties + 12% import VAT on ~PHP 27M)? Needed to price each case — get a PH accountant/customs broker engaged now.
