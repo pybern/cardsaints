@@ -1,6 +1,6 @@
 # Card Saints — October 30 Release: Business & Operations Plan
 
-_Last updated: June 12, 2026_
+_Last updated: June 13, 2026_
 
 ## 1. Snapshot
 
@@ -268,6 +268,41 @@ Binance is not BSP-licensed; HK's Stablecoins Ordinance bars unlicensed OTC shop
 PH corporate bank wire (pre-negotiated FX) as the primary rail for the main tranche; one licensed crypto rail (Route B if King accepts USDT, else Route A) onboarded and tested as the backup pipe; Wise accounts on both sides for collections support, the HK-side FPS payment leg, and any sub-cap urgent payments.
 
 **→ Action: ask King this week whether they accept USDT.** If yes, Route B or a bank-wire+USDT split beats fiat-only. If no, the bank wire stays primary.
+
+### Alternative architecture: collect directly in HK (Shopify + Stripe)
+
+**The proposal:** stand up a Shopify store under the HK entity, have PH buyers pay by card through Stripe Hong Kong (which settles in HKD to an HK bank account), then withdraw in HK to pay King via FPS. The appeal is real: if buyers pay into an HK account directly, the bulk **PH → HK remittance problem disappears entirely** — no BSP outward-FX window, no Wise USD 50K/month cap, no bank-wire FX negotiation. The card networks do the cross-border leg, funds land in HKD, and paying King is the easy FPS step we already planned. It is fully legal, and Stripe gives a clean, auto-reconciled paper trail (one order = one payment per buyer), which also helps source-of-funds and customs evidence.
+
+But for **this** deal — ~HKD 3.78M of high-ticket payments collected in a one-week burst — card processing is the wrong primary rail. Three problems, in order of severity:
+
+**1. Fund holds / reserves can freeze the cash exactly when we need it (the deal-killer risk).**
+Stripe (like all payment facilitators) onboards instantly and underwrites *after* money starts moving. The textbook triggers for a reserve or freeze are: a brand-new merchant, a sudden volume spike, high average ticket, and **fulfillment that happens after payment** (we ship after Oct 30). This deal hits *every* trigger at once. Stripe can hold 100% of the balance, impose a 5–30% rolling reserve, or delay payouts 30–120 days. If that happens during **Oct 23–30**, the money is locked precisely when King's invoice is due — converting our manageable collection-lag risk into a frozen-funds crisis with no recourse on King's timeline.
+
+**2. Fees are roughly 3–6× the bank-wire / crypto cost.**
+Stripe HK is 3.4% + HK$2.35 (domestic), **+0.5% for international cards** (all PH-issued cards are international to an HK account), **+2% if currency conversion is required**. Realistic landed rate for PH-card → HKD settlement is **~3.9–5.9%**.
+
+| Rail | All-in cost on ~HKD 3.78M | vs. bank wire (~1–2%) |
+| --- | --- | --- |
+| Stripe HK, no conversion (~3.9%) | ~HKD 147K + per-txn fees | +70K to +110K |
+| Stripe HK, with conversion (~5.9%) | ~HKD 223K + per-txn fees | +150K to +185K |
+| PH corporate bank wire (1–2%) | ~HKD 38–76K | baseline |
+| Licensed crypto (0.3–1.5%) | ~HKD 11–57K | cheaper |
+
+On top of that: **HK$85 per chargeback**, and a dispute rate over ~0.75% itself triggers reserves. That HKD 100–185K delta is a direct hit to margin.
+
+**3. Chargebacks reverse the "no case ships without cleared payment" rule.**
+Card payments are reversible for ~120 days; bank transfers and USDT are not. For high-value collectibles shipped *after* payment, "item not received" / "not as described" disputes are a known abuse vector, and the merchant often loses by default. The current plan's irreversibility (PESONet/wire/USDT) is a feature we'd be giving up.
+
+**Secondary frictions:**
+- **Buyer card limits.** A multi-case order is tens of thousands of HKD on one charge (3 cases ≈ HKD 10,566 ≈ PHP 75K+). Many PH consumer cards can't hold that, and large foreign-currency charges are routinely declined by issuers as suspected fraud.
+- **Buyer-side FX returns.** Buyers' cards add ~1–3% foreign-transaction fees — reintroducing the "dozens of retail FX spreads" this plan deliberately avoids, just shifted onto the buyer (and onto our price competitiveness).
+- **Shopify is overkill** for a known, pre-committed buyer list. If we want the HK-landing benefit, Stripe Payment Links / invoices do the same job without a storefront subscription; Shopify only adds value if we're building an ongoing public store.
+
+**Verdict — useful as a supplementary channel, not the main rail.**
+- **Do not** route the main tranche through Stripe: the freeze risk in the Oct 23–30 window alone disqualifies it, before counting the fee and chargeback costs.
+- **Optionally** use it for small / single-case buyers, deposits, or buyers who genuinely only have a card and can't do a bank transfer — capped to a small share of total volume.
+- **If used at all,** open and *warm up* the Stripe account months ahead (process small real volumes in Aug–Sep so the October burst isn't a cold-start spike), and proactively tell Stripe underwriting the expected October volume and fulfillment timeline with documentation. A cold account taking HKD 3.78M in one week will almost certainly be held.
+- The clean way to capture the "land funds directly in HK" benefit without card risk is **King accepting USDT (Route B)** or the pre-negotiated PH bank wire — both already in the stack and both cheaper and irreversible.
 
 ### Regulatory (BSP)
 
