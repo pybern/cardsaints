@@ -26,6 +26,15 @@ export default function Home() {
             hello@cardsaints.com
           </a>
         </p>
+
+        <p className="mt-6">
+          <a
+            href="/buy"
+            className="font-semibold underline-offset-4 hover:underline"
+          >
+            Buy current One Piece TCG releases &rarr;
+          </a>
+        </p>
       </div>
     </main>
   );
