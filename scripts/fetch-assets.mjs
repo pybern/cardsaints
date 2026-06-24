@@ -13,9 +13,10 @@
  *     2. falling back to the set's marquee "-001" card art (optcgapi / official CDN),
  *     3. falling back to a generated SVG placeholder so the build never breaks.
  * - Downloads a Japanese cover into public/products/{code}-jp.png:
- *     the set's marquee "-001" card art from the official Japanese CDN (free,
- *     comprehensive; Japanese sealed-box photos aren't freely available for the
- *     back catalogue), falling back to an SVG placeholder.
+ *     1. the official Japanese sealed-product render (booster pack/box or deck
+ *        thumbnail) from onepiece-cardgame.com,
+ *     2. falling back to the marquee "-001" Japanese card art,
+ *     3. falling back to an SVG placeholder.
  * Each product in the catalog therefore carries images.en + images.jp.
  * - Writes the product catalog (prices + mock inventory) to src/lib/catalog.json.
  *
@@ -36,8 +37,10 @@ const CURRENCY = "HKD";
 const API = "https://optcgapi.com/api";
 const MEDIA = "https://optcgapi.com/media/static/Card_Images";
 const OFFICIAL = "https://en.onepiece-cardgame.com/images/cardlist/card";
-// Japanese official card-image CDN (authentic JP art for every set).
-const JP_CARD = "https://www.onepiece-cardgame.com/images/cardlist/card";
+// Japanese official CDN. Product (pack/box) renders live under /images/products/...,
+// and per-card art under /images/cardlist/card/... (used as a fallback).
+const JP_SITE = "https://www.onepiece-cardgame.com";
+const JP_CARD = `${JP_SITE}/images/cardlist/card`;
 
 // tcgcsv.com — free TCGplayer data mirror; used for sealed booster-box / deck images.
 const TCGCSV = "https://tcgcsv.com/tcgplayer";
@@ -335,25 +338,47 @@ async function downloadCover(code, name, category, groups) {
   return "placeholder";
 }
 
-/**
- * Download the Japanese cover (official JP card art) to public/products/{code}-jp.png.
- * Returns "jp-card" | "jp-placeholder".
- */
-async function downloadJpCover(code, name) {
-  const dest = path.join(PRODUCTS_DIR, `${code}-jp.png`);
-  const img = coverId(code);
+/** Japanese product slug, e.g. "OP-15" -> "op15", "ST-05" -> "st05". */
+function jpSlug(code) {
+  return code.replace(/-/g, "").toLowerCase();
+}
+
+async function tryDownload(url, dest) {
   try {
-    const res = await fetchWithUA(`${JP_CARD}/${img}.png`);
-    if (res.ok) {
-      const buf = Buffer.from(await res.arrayBuffer());
-      if (buf.length >= 1024) {
-        await writeFile(dest, buf);
-        return "jp-card";
-      }
-    }
+    const res = await fetchWithUA(url);
+    if (!res.ok) return false;
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (buf.length < 1024) return false;
+    await writeFile(dest, buf);
+    return true;
   } catch {
-    // fall through to placeholder
+    return false;
   }
+}
+
+/**
+ * Download the Japanese cover to public/products/{code}-jp.png:
+ *   1. the official Japanese product render (booster pack/box or deck thumbnail),
+ *   2. falling back to the marquee "-001" Japanese card art,
+ *   3. falling back to an SVG placeholder.
+ * Returns "jp-product" | "jp-card" | "jp-placeholder".
+ */
+async function downloadJpCover(code, name, category) {
+  const dest = path.join(PRODUCTS_DIR, `${code}-jp.png`);
+  const slug = jpSlug(code);
+  const dir = category === "ST" ? "decks" : "boosters";
+
+  // 1. Official Japanese sealed-product render.
+  if (await tryDownload(`${JP_SITE}/images/products/${dir}/${slug}/img_thumbnail.png`, dest)) {
+    return "jp-product";
+  }
+
+  // 2. Fallback: Japanese card art.
+  if (await tryDownload(`${JP_CARD}/${coverId(code)}.png`, dest)) {
+    return "jp-card";
+  }
+
+  // 3. Fallback: placeholder.
   await writeFile(dest, placeholderSvg(`${code} (JP)`, name));
   return "jp-placeholder";
 }
@@ -431,11 +456,19 @@ async function main() {
   );
   console.log("Downloading cover art (sealed booster-box / deck images) ...");
 
-  const tally = { box: 0, card: 0, official: 0, placeholder: 0, "jp-card": 0, "jp-placeholder": 0 };
+  const tally = {
+    box: 0,
+    card: 0,
+    official: 0,
+    placeholder: 0,
+    "jp-product": 0,
+    "jp-card": 0,
+    "jp-placeholder": 0,
+  };
   const products = [];
   for (const r of releases) {
     const tag = await downloadCover(r.code, r.name, r.category, groups);
-    const jpTag = await downloadJpCover(r.code, r.name);
+    const jpTag = await downloadJpCover(r.code, r.name, r.category);
     tally[tag]++;
     tally[jpTag]++;
     const enImage = `/products/${r.code}.jpg`;
@@ -459,7 +492,7 @@ async function main() {
 
   console.log(
     `\nDone. EN covers: box=${tally.box} card=${tally.card} official=${tally.official} placeholder=${tally.placeholder}` +
-      ` | JP covers: card=${tally["jp-card"]} placeholder=${tally["jp-placeholder"]}`,
+      ` | JP covers: product=${tally["jp-product"]} card=${tally["jp-card"]} placeholder=${tally["jp-placeholder"]}`,
   );
   console.log(`Catalog written: ${path.relative(ROOT, CATALOG_PATH)} (${products.length} products)`);
 }
