@@ -13,10 +13,10 @@
  *     2. falling back to the set's marquee "-001" card art (optcgapi / official CDN),
  *     3. falling back to a generated SVG placeholder so the build never breaks.
  * - Downloads a Japanese cover into public/products/{code}-jp.png:
- *     1. the official Japanese sealed-product render (booster pack/box or deck
- *        thumbnail) from onepiece-cardgame.com,
- *     2. falling back to the marquee "-001" Japanese card art,
- *     3. falling back to an SVG placeholder.
+ *     1. a Japanese sealed booster-BOX photo (OP/EB) from a public Shopify feed,
+ *     2. the official Japanese product render (booster pack or deck-box thumbnail),
+ *     3. the marquee "-001" Japanese card art,
+ *     4. an SVG placeholder.
  * Each product in the catalog therefore carries images.en + images.jp.
  * - Writes the product catalog (prices + mock inventory) to src/lib/catalog.json.
  *
@@ -42,6 +42,11 @@ const OFFICIAL = "https://en.onepiece-cardgame.com/images/cardlist/card";
 const JP_SITE = "https://www.onepiece-cardgame.com";
 const JP_CARD = `${JP_SITE}/images/cardlist/card`;
 
+// Japanese sealed booster-BOX photos (the official JP site only publishes pack/
+// banner renders, not boxes). This Shopify storefront exposes a public product
+// feed with clean Japanese box photos on the Shopify CDN, keyed by set code.
+const JP_BOX_FEED = "https://tcgame.com.au/products.json?limit=250";
+
 // tcgcsv.com — free TCGplayer data mirror; used for sealed booster-box / deck images.
 const TCGCSV = "https://tcgcsv.com/tcgplayer";
 const OP_CATEGORY = 68; // One Piece Card Game category id on TCGplayer
@@ -50,8 +55,14 @@ const OP_CATEGORY = 68; // One Piece Card Game category id on TCGplayer
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 
-function fetchWithUA(url, extraHeaders = {}) {
-  return fetch(url, { headers: { "User-Agent": UA, ...extraHeaders } });
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function fetchWithUA(url, extraHeaders = {}, timeoutMs = 20000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  return fetch(url, { headers: { "User-Agent": UA, ...extraHeaders }, signal: ctrl.signal }).finally(
+    () => clearTimeout(timer),
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -343,42 +354,83 @@ function jpSlug(code) {
   return code.replace(/-/g, "").toLowerCase();
 }
 
-async function tryDownload(url, dest) {
+/**
+ * Fetch the Japanese box-photo feed and build a { code -> imageUrl } map.
+ * Prefers a "Booster Box" listing (excluding cases/packs/displays). Non-fatal.
+ */
+async function fetchJpBoxIndex() {
+  const map = {};
+  let products;
   try {
-    const res = await fetchWithUA(url);
-    if (!res.ok) return false;
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.length < 1024) return false;
-    await writeFile(dest, buf);
-    return true;
-  } catch {
-    return false;
+    products = (await fetchJson(JP_BOX_FEED)).products || [];
+  } catch (err) {
+    console.warn("JP box feed unavailable, will fall back to official JP renders:", err.message);
+    return map;
   }
+  for (const p of products) {
+    const title = p.title || "";
+    if (!/japanese/i.test(title)) continue;
+    const img = (p.images && p.images[0] && p.images[0].src) || null;
+    if (!img) continue;
+    const isBox = /box/i.test(title) && !/case/i.test(title);
+    if (!isBox) continue;
+    for (const m of title.matchAll(/\b(OP|EB|ST)[- ]?(\d{1,2})\b/gi)) {
+      const code = `${m[1].toUpperCase()}-${String(Number(m[2])).padStart(2, "0")}`;
+      if (!map[code]) map[code] = img; // first box listing wins
+    }
+  }
+  return map;
+}
+
+async function tryDownload(url, dest, tries = 3) {
+  for (let attempt = 1; attempt <= tries; attempt++) {
+    try {
+      const res = await fetchWithUA(url, {}, 15000);
+      if (res.ok) {
+        const buf = Buffer.from(await res.arrayBuffer());
+        if (buf.length >= 1024) {
+          await writeFile(dest, buf);
+          return true;
+        }
+      }
+    } catch {
+      // transient (timeout / network); retry below
+    }
+    if (attempt < tries) await sleep(1500);
+  }
+  return false;
 }
 
 /**
  * Download the Japanese cover to public/products/{code}-jp.png:
- *   1. the official Japanese product render (booster pack/box or deck thumbnail),
- *   2. falling back to the marquee "-001" Japanese card art,
- *   3. falling back to an SVG placeholder.
- * Returns "jp-product" | "jp-card" | "jp-placeholder".
+ *   1. a Japanese sealed booster-BOX photo (from the JP box feed) — OP/EB,
+ *   2. the official Japanese product render (booster pack or deck-box thumbnail),
+ *   3. the marquee "-001" Japanese card art,
+ *   4. an SVG placeholder.
+ * Returns "jp-box" | "jp-product" | "jp-card" | "jp-placeholder".
  */
-async function downloadJpCover(code, name, category) {
+async function downloadJpCover(code, name, category, jpBoxIndex) {
   const dest = path.join(PRODUCTS_DIR, `${code}-jp.png`);
   const slug = jpSlug(code);
   const dir = category === "ST" ? "decks" : "boosters";
 
-  // 1. Official Japanese sealed-product render.
+  // 1. Japanese sealed booster-box photo (best match for OP/EB boxes).
+  const boxUrl = jpBoxIndex && jpBoxIndex[code];
+  if (boxUrl && (await tryDownload(boxUrl, dest, 5))) {
+    return "jp-box";
+  }
+
+  // 2. Official Japanese sealed-product render (pack for boosters, box for decks).
   if (await tryDownload(`${JP_SITE}/images/products/${dir}/${slug}/img_thumbnail.png`, dest)) {
     return "jp-product";
   }
 
-  // 2. Fallback: Japanese card art.
+  // 3. Fallback: Japanese card art.
   if (await tryDownload(`${JP_CARD}/${coverId(code)}.png`, dest)) {
     return "jp-card";
   }
 
-  // 3. Fallback: placeholder.
+  // 4. Fallback: placeholder.
   await writeFile(dest, placeholderSvg(`${code} (JP)`, name));
   return "jp-placeholder";
 }
@@ -417,6 +469,10 @@ async function main() {
   } catch (err) {
     console.warn("tcgcsv groups unavailable, will fall back to card art:", err.message);
   }
+
+  // Japanese booster-box photo index (non-fatal if down).
+  const jpBoxIndex = await fetchJpBoxIndex();
+  console.log(`Indexed ${Object.keys(jpBoxIndex).length} Japanese box photos.`);
 
   // --- OP: all available OP booster sets ---------------------------------
   const opEntries = [];
@@ -461,6 +517,7 @@ async function main() {
     card: 0,
     official: 0,
     placeholder: 0,
+    "jp-box": 0,
     "jp-product": 0,
     "jp-card": 0,
     "jp-placeholder": 0,
@@ -468,7 +525,7 @@ async function main() {
   const products = [];
   for (const r of releases) {
     const tag = await downloadCover(r.code, r.name, r.category, groups);
-    const jpTag = await downloadJpCover(r.code, r.name, r.category);
+    const jpTag = await downloadJpCover(r.code, r.name, r.category, jpBoxIndex);
     tally[tag]++;
     tally[jpTag]++;
     const enImage = `/products/${r.code}.jpg`;
@@ -492,7 +549,7 @@ async function main() {
 
   console.log(
     `\nDone. EN covers: box=${tally.box} card=${tally.card} official=${tally.official} placeholder=${tally.placeholder}` +
-      ` | JP covers: product=${tally["jp-product"]} card=${tally["jp-card"]} placeholder=${tally["jp-placeholder"]}`,
+      ` | JP covers: box=${tally["jp-box"]} product=${tally["jp-product"]} card=${tally["jp-card"]} placeholder=${tally["jp-placeholder"]}`,
   );
   console.log(`Catalog written: ${path.relative(ROOT, CATALOG_PATH)} (${products.length} products)`);
 }
