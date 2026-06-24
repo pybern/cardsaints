@@ -1,0 +1,682 @@
+{
+  "currency": "HKD",
+  "categories": [
+    {
+      "key": "OP",
+      "label": "Booster Sets",
+      "blurb": "The main line. Twenty-four packs per box, twelve boxes per sealed case — the core of every allocation we hold."
+    },
+    {
+      "key": "EB",
+      "label": "Extra Boosters",
+      "blurb": "Limited between-set releases. Smaller print runs, reliably tight supply, collector demand that outlives the shelf."
+    },
+    {
+      "key": "ST",
+      "label": "Starter Decks",
+      "blurb": "Ready-to-play constructed decks. The entry point for new players and a steady mover by the display."
+    }
+  ],
+  "products": [
+    {
+      "id": "OP-01",
+      "code": "OP-01",
+      "category": "OP",
+      "name": "Romance Dawn",
+      "releaseDate": "2022-12-02",
+      "image": "/products/OP-01.jpg",
+      "variants": [
+        {
+          "id": "OP-01:box",
+          "label": "Booster Box (24 packs)",
+          "price": 1104,
+          "stock": 0
+        },
+        {
+          "id": "OP-01:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 11923,
+          "stock": 18
+        }
+      ]
+    },
+    {
+      "id": "OP-02",
+      "code": "OP-02",
+      "category": "OP",
+      "name": "Paramount War",
+      "releaseDate": "2023-03-10",
+      "image": "/products/OP-02.jpg",
+      "variants": [
+        {
+          "id": "OP-02:box",
+          "label": "Booster Box (24 packs)",
+          "price": 1104,
+          "stock": 12
+        },
+        {
+          "id": "OP-02:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 11923,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": "OP-03",
+      "code": "OP-03",
+      "category": "OP",
+      "name": "Pillars of Strength",
+      "releaseDate": "2023-06-30",
+      "image": "/products/OP-03.jpg",
+      "variants": [
+        {
+          "id": "OP-03:box",
+          "label": "Booster Box (24 packs)",
+          "price": 1104,
+          "stock": 27
+        },
+        {
+          "id": "OP-03:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 11923,
+          "stock": 30
+        }
+      ]
+    },
+    {
+      "id": "OP-04",
+      "code": "OP-04",
+      "category": "OP",
+      "name": "Kingdoms of Intrigue",
+      "releaseDate": "2023-09-22",
+      "image": "/products/OP-04.jpg",
+      "variants": [
+        {
+          "id": "OP-04:box",
+          "label": "Booster Box (24 packs)",
+          "price": 897,
+          "stock": 2
+        },
+        {
+          "id": "OP-04:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 9688,
+          "stock": 37
+        }
+      ]
+    },
+    {
+      "id": "OP-05",
+      "code": "OP-05",
+      "category": "OP",
+      "name": "Awakening of the New Era",
+      "releaseDate": "2023-12-08",
+      "image": "/products/OP-05.jpg",
+      "variants": [
+        {
+          "id": "OP-05:box",
+          "label": "Booster Box (24 packs)",
+          "price": 897,
+          "stock": 5
+        },
+        {
+          "id": "OP-05:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 9688,
+          "stock": 8
+        }
+      ]
+    },
+    {
+      "id": "OP-06",
+      "code": "OP-06",
+      "category": "OP",
+      "name": "Wings of the Captain",
+      "releaseDate": "2024-03-08",
+      "image": "/products/OP-06.jpg",
+      "variants": [
+        {
+          "id": "OP-06:box",
+          "label": "Booster Box (24 packs)",
+          "price": 897,
+          "stock": 18
+        },
+        {
+          "id": "OP-06:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 9688,
+          "stock": 23
+        }
+      ]
+    },
+    {
+      "id": "OP-07",
+      "code": "OP-07",
+      "category": "OP",
+      "name": "500 Years in the Future",
+      "releaseDate": "2024-06-28",
+      "image": "/products/OP-07.jpg",
+      "variants": [
+        {
+          "id": "OP-07:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 13
+        },
+        {
+          "id": "OP-07:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 12
+        }
+      ]
+    },
+    {
+      "id": "OP-08",
+      "code": "OP-08",
+      "category": "OP",
+      "name": "Two Legends",
+      "releaseDate": "2024-09-13",
+      "image": "/products/OP-08.jpg",
+      "variants": [
+        {
+          "id": "OP-08:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 14
+        },
+        {
+          "id": "OP-08:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "id": "OP-09",
+      "code": "OP-09",
+      "category": "OP",
+      "name": "Emperors in the New World",
+      "releaseDate": "2024-11-08",
+      "image": "/products/OP-09.jpg",
+      "variants": [
+        {
+          "id": "OP-09:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 31
+        },
+        {
+          "id": "OP-09:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 0
+        }
+      ]
+    },
+    {
+      "id": "OP-10",
+      "code": "OP-10",
+      "category": "OP",
+      "name": "Royal Blood",
+      "releaseDate": "2025-02-14",
+      "image": "/products/OP-10.jpg",
+      "variants": [
+        {
+          "id": "OP-10:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 13
+        },
+        {
+          "id": "OP-10:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 12
+        }
+      ]
+    },
+    {
+      "id": "OP-11",
+      "code": "OP-11",
+      "category": "OP",
+      "name": "A Fist of Divine Speed",
+      "releaseDate": "2025-05-30",
+      "image": "/products/OP-11.jpg",
+      "variants": [
+        {
+          "id": "OP-11:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 32
+        },
+        {
+          "id": "OP-11:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 35
+        }
+      ]
+    },
+    {
+      "id": "OP-12",
+      "code": "OP-12",
+      "category": "OP",
+      "name": "Legacy of the Master",
+      "releaseDate": "2025-08-29",
+      "image": "/products/OP-12.jpg",
+      "variants": [
+        {
+          "id": "OP-12:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 1
+        },
+        {
+          "id": "OP-12:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "id": "OP-13",
+      "code": "OP-13",
+      "category": "OP",
+      "name": "Carrying On His Will",
+      "releaseDate": "2025-11-21",
+      "image": "/products/OP-13.jpg",
+      "variants": [
+        {
+          "id": "OP-13:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 24
+        },
+        {
+          "id": "OP-13:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 7
+        }
+      ]
+    },
+    {
+      "id": "OP-14",
+      "code": "OP-14",
+      "category": "OP",
+      "name": "The Azure Sea's Seven",
+      "releaseDate": "2026-02-13",
+      "image": "/products/OP-14.jpg",
+      "variants": [
+        {
+          "id": "OP-14:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 31
+        },
+        {
+          "id": "OP-14:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 30
+        }
+      ]
+    },
+    {
+      "id": "OP-15",
+      "code": "OP-15",
+      "category": "OP",
+      "name": "Adventure on Kami's Island",
+      "releaseDate": "2026-05-29",
+      "image": "/products/OP-15.jpg",
+      "variants": [
+        {
+          "id": "OP-15:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 0
+        },
+        {
+          "id": "OP-15:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 7
+        }
+      ]
+    },
+    {
+      "id": "OP-16",
+      "code": "OP-16",
+      "category": "OP",
+      "name": "The Time of Battle",
+      "releaseDate": "2026-08-28",
+      "image": "/products/OP-16.jpg",
+      "variants": [
+        {
+          "id": "OP-16:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 29
+        },
+        {
+          "id": "OP-16:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 16
+        }
+      ]
+    },
+    {
+      "id": "EB-01",
+      "code": "EB-01",
+      "category": "EB",
+      "name": "Extra Booster: Memorial Collection",
+      "releaseDate": "2024-03-29",
+      "image": "/products/EB-01.jpg",
+      "variants": [
+        {
+          "id": "EB-01:box",
+          "label": "Booster Box (24 packs)",
+          "price": 728,
+          "stock": 0
+        },
+        {
+          "id": "EB-01:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7862,
+          "stock": 24
+        }
+      ]
+    },
+    {
+      "id": "EB-02",
+      "code": "EB-02",
+      "category": "EB",
+      "name": "Extra Booster: Anime 25th Collection",
+      "releaseDate": "2025-04-25",
+      "image": "/products/EB-02.jpg",
+      "variants": [
+        {
+          "id": "EB-02:box",
+          "label": "Booster Box (24 packs)",
+          "price": 520,
+          "stock": 26
+        },
+        {
+          "id": "EB-02:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 5616,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": "ST-01",
+      "code": "ST-01",
+      "category": "ST",
+      "name": "Straw Hat Crew",
+      "releaseDate": "2022-12-02",
+      "image": "/products/ST-01.jpg",
+      "variants": [
+        {
+          "id": "ST-01:deck",
+          "label": "Single Deck",
+          "price": 143,
+          "stock": 0
+        },
+        {
+          "id": "ST-01:display",
+          "label": "Display (6 decks)",
+          "price": 789,
+          "stock": 0
+        }
+      ]
+    },
+    {
+      "id": "ST-02",
+      "code": "ST-02",
+      "category": "ST",
+      "name": "Worst Generation",
+      "releaseDate": "2022-12-02",
+      "image": "/products/ST-02.jpg",
+      "variants": [
+        {
+          "id": "ST-02:deck",
+          "label": "Single Deck",
+          "price": 143,
+          "stock": 28
+        },
+        {
+          "id": "ST-02:display",
+          "label": "Display (6 decks)",
+          "price": 789,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": "ST-03",
+      "code": "ST-03",
+      "category": "ST",
+      "name": "The Seven Warlords of The Sea",
+      "releaseDate": "2022-12-02",
+      "image": "/products/ST-03.jpg",
+      "variants": [
+        {
+          "id": "ST-03:deck",
+          "label": "Single Deck",
+          "price": 143,
+          "stock": 19
+        },
+        {
+          "id": "ST-03:display",
+          "label": "Display (6 decks)",
+          "price": 789,
+          "stock": 8
+        }
+      ]
+    },
+    {
+      "id": "ST-04",
+      "code": "ST-04",
+      "category": "ST",
+      "name": "Animal Kingdom Pirates",
+      "releaseDate": "2022-12-02",
+      "image": "/products/ST-04.jpg",
+      "variants": [
+        {
+          "id": "ST-04:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 36
+        },
+        {
+          "id": "ST-04:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "id": "ST-05",
+      "code": "ST-05",
+      "category": "ST",
+      "name": "Film Edition",
+      "releaseDate": "2023-03-10",
+      "image": "/products/ST-05.jpg",
+      "variants": [
+        {
+          "id": "ST-05:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 39
+        },
+        {
+          "id": "ST-05:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 18
+        }
+      ]
+    },
+    {
+      "id": "ST-06",
+      "code": "ST-06",
+      "category": "ST",
+      "name": "Absolute Justice",
+      "releaseDate": "2023-03-10",
+      "image": "/products/ST-06.jpg",
+      "variants": [
+        {
+          "id": "ST-06:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 18
+        },
+        {
+          "id": "ST-06:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 21
+        }
+      ]
+    },
+    {
+      "id": "ST-07",
+      "code": "ST-07",
+      "category": "ST",
+      "name": "Big Mom Pirates",
+      "releaseDate": "2023-06-30",
+      "image": "/products/ST-07.jpg",
+      "variants": [
+        {
+          "id": "ST-07:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 0
+        },
+        {
+          "id": "ST-07:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 22
+        }
+      ]
+    },
+    {
+      "id": "ST-08",
+      "code": "ST-08",
+      "category": "ST",
+      "name": "Monkey.D.Luffy",
+      "releaseDate": "2023-09-22",
+      "image": "/products/ST-08.jpg",
+      "variants": [
+        {
+          "id": "ST-08:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 4
+        },
+        {
+          "id": "ST-08:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 0
+        }
+      ]
+    },
+    {
+      "id": "ST-09",
+      "code": "ST-09",
+      "category": "ST",
+      "name": "Yamato",
+      "releaseDate": "2023-12-08",
+      "image": "/products/ST-09.jpg",
+      "variants": [
+        {
+          "id": "ST-09:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 0
+        },
+        {
+          "id": "ST-09:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 10
+        }
+      ]
+    },
+    {
+      "id": "ST-10",
+      "code": "ST-10",
+      "category": "ST",
+      "name": "Ultra Deck: The Three Captains",
+      "releaseDate": "2024-03-08",
+      "image": "/products/ST-10.jpg",
+      "variants": [
+        {
+          "id": "ST-10:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 19
+        },
+        {
+          "id": "ST-10:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 0
+        }
+      ]
+    },
+    {
+      "id": "ST-11",
+      "code": "ST-11",
+      "category": "ST",
+      "name": "Uta",
+      "releaseDate": "2024-03-08",
+      "image": "/products/ST-11.jpg",
+      "variants": [
+        {
+          "id": "ST-11:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 30
+        },
+        {
+          "id": "ST-11:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 11
+        }
+      ]
+    },
+    {
+      "id": "ST-12",
+      "code": "ST-12",
+      "category": "ST",
+      "name": "Zoro and Sanji",
+      "releaseDate": "2024-06-28",
+      "image": "/products/ST-12.jpg",
+      "variants": [
+        {
+          "id": "ST-12:deck",
+          "label": "Single Deck",
+          "price": 95,
+          "stock": 35
+        },
+        {
+          "id": "ST-12:display",
+          "label": "Display (6 decks)",
+          "price": 524,
+          "stock": 12
+        }
+      ]
+    }
+  ]
+}
