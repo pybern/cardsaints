@@ -64,7 +64,7 @@ export default function CartDrawer() {
                 const stock = getStock(item.variantId);
                 return (
                   <li key={item.variantId} className="flex gap-3 py-4">
-                    <div className="relative h-20 w-16 flex-shrink-0 overflow-hidden rounded-md border border-border bg-card">
+                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-border bg-white">
                       <Image
                         src={item.image}
                         alt={item.name}

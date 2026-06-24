@@ -222,13 +222,13 @@ export default function CheckoutPage() {
           <ul className="space-y-4">
             {items.map((item) => (
               <li key={item.variantId} className="flex gap-3">
-                <div className="relative h-16 w-12 flex-shrink-0 overflow-hidden rounded border border-border bg-background">
+                <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded border border-border bg-white">
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
-                    sizes="48px"
-                    className="object-contain p-0.5"
+                    sizes="56px"
+                    className="object-contain p-1"
                   />
                 </div>
                 <div className="flex flex-1 justify-between gap-2 text-sm">

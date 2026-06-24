@@ -51,13 +51,13 @@ export default function ProductCard({ product, currency }) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md">
-      <div className="relative aspect-[63/88] bg-foreground/5">
+      <div className="relative aspect-square bg-white">
         <Image
           src={product.image}
-          alt={`${product.name} (${product.code}) cover art`}
+          alt={`${product.name} (${product.code}) sealed product`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
-          className="object-contain p-3"
+          className="object-contain p-4"
         />
         <span className="absolute left-3 top-3 rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold tracking-wide text-background">
           {product.code}

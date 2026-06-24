@@ -7,9 +7,11 @@
  * - Pulls the live list of sets / starter decks from optcgapi.com (free, no auth).
  * - Selects ALL available OP booster sets, the EB extra boosters, and the
  *   ST-01..ST-12 starter decks.
- * - Downloads a real cover image (the set's marquee "-001" Leader card) into
- *   public/products/{code}.jpg. Falls back to the official CDN, then to a
- *   generated SVG placeholder so the build never breaks.
+ * - Downloads a real sealed-product cover into public/products/{code}.jpg:
+ *     1. the set's Booster Box (OP/EB) or Starter Deck box (ST) photo from the
+ *        free tcgcsv.com TCGplayer mirror,
+ *     2. falling back to the set's marquee "-001" card art (optcgapi / official CDN),
+ *     3. falling back to a generated SVG placeholder so the build never breaks.
  * - Writes the product catalog (prices + mock inventory) to src/lib/catalog.json.
  *
  * Re-runnable and deterministic (no randomness). Run with: `node scripts/fetch-assets.mjs`
@@ -29,6 +31,18 @@ const CURRENCY = "HKD";
 const API = "https://optcgapi.com/api";
 const MEDIA = "https://optcgapi.com/media/static/Card_Images";
 const OFFICIAL = "https://en.onepiece-cardgame.com/images/cardlist/card";
+
+// tcgcsv.com — free TCGplayer data mirror; used for sealed booster-box / deck images.
+const TCGCSV = "https://tcgcsv.com/tcgplayer";
+const OP_CATEGORY = 68; // One Piece Card Game category id on TCGplayer
+
+// Some hosts (tcgcsv) reject the default Node user-agent, so present a browser one.
+const UA =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
+
+function fetchWithUA(url, extraHeaders = {}) {
+  return fetch(url, { headers: { "User-Agent": UA, ...extraHeaders } });
+}
 
 // ---------------------------------------------------------------------------
 // Curated metadata: release dates + the ST decks we feature.
@@ -189,32 +203,127 @@ function ensureStockStates(products) {
 }
 
 async function fetchJson(url) {
-  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  const res = await fetchWithUA(url, { Accept: "application/json" });
   if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`);
   return res.json();
 }
 
-/** Download a cover image; returns "media" | "official" | "placeholder". */
-async function downloadCover(code, name) {
+function unwrap(json) {
+  return json && typeof json === "object" && Array.isArray(json.results) ? json.results : json;
+}
+
+/** Parse a tcgcsv group abbreviation into { fam, num }, e.g. "OP15-EB04" -> OP/15. */
+function parseAbbr(abbr) {
+  if (!abbr) return null;
+  const m = abbr.match(/^(OP|EB|ST)-?0*(\d+)/i);
+  if (!m) return null;
+  return { fam: m[1].toUpperCase(), num: Number(m[2]) };
+}
+
+// Group abbreviations that are tournament/event/promo variants, not the main set.
+const EVENT_SUFFIX = /\b(RE|ANN|DD|RP|PR)\b/i;
+
+/**
+ * Find the tcgcsv groupId for a catalog code (e.g. "OP-15"), preferring the main
+ * set group over release-event / anniversary variants.
+ */
+function findGroupId(groups, code) {
+  const [fam, numStr] = code.split("-");
+  const num = Number(numStr);
+  const matches = groups.filter((g) => {
+    const p = parseAbbr(g.abbreviation);
+    return p && p.fam === fam && p.num === num;
+  });
+  if (matches.length === 0) return null;
+  // Prefer abbreviations without spaces / event suffixes, then the shortest name.
+  matches.sort((a, b) => {
+    const aEvent = /\s/.test(a.abbreviation) || EVENT_SUFFIX.test(a.abbreviation) ? 1 : 0;
+    const bEvent = /\s/.test(b.abbreviation) || EVENT_SUFFIX.test(b.abbreviation) ? 1 : 0;
+    if (aEvent !== bEvent) return aEvent - bEvent;
+    return a.name.length - b.name.length;
+  });
+  return matches[0].groupId;
+}
+
+/** Upscale a TCGplayer thumbnail URL to a larger render. */
+function upscale(url) {
+  return url ? url.replace(/_\d+w\.jpg$/i, "_in_1000x1000.jpg") : url;
+}
+
+/** Resolve the sealed Booster Box (OP/EB) or Starter Deck (ST) image URL for a group. */
+async function boxImageUrl(groupId, category) {
+  let products;
+  try {
+    products = unwrap(await fetchJson(`${TCGCSV}/${OP_CATEGORY}/${groupId}/products`));
+  } catch {
+    return null;
+  }
+  if (!Array.isArray(products)) return null;
+
+  const pick = (predicate) => products.find((p) => p.imageUrl && predicate(p.name || ""));
+
+  let product;
+  if (category === "ST") {
+    product =
+      pick((n) => /(Starter|Ultra) Deck/i.test(n) && !/Display/i.test(n) && !/Set of/i.test(n)) ||
+      pick((n) => /Deck/i.test(n) && !/Display/i.test(n) && !/Set of/i.test(n));
+  } else {
+    product =
+      pick((n) => /Booster Box/i.test(n) && !/Case/i.test(n)) ||
+      pick((n) => /Box/i.test(n) && !/Case/i.test(n) && !/Topper/i.test(n));
+  }
+  return product ? upscale(product.imageUrl) : null;
+}
+
+/**
+ * Download a cover image; returns "box" | "card" | "official" | "placeholder".
+ * `groups` is the tcgcsv group list (may be null if unavailable).
+ */
+async function downloadCover(code, name, category, groups) {
   const dest = path.join(PRODUCTS_DIR, `${code}.jpg`);
+
+  // 1. Sealed product (booster box / deck) image from tcgcsv -> TCGplayer CDN.
+  if (groups) {
+    const groupId = findGroupId(groups, code);
+    if (groupId != null) {
+      const url = await boxImageUrl(groupId, category);
+      if (url) {
+        try {
+          const res = await fetchWithUA(url);
+          if (res.ok) {
+            const buf = Buffer.from(await res.arrayBuffer());
+            if (buf.length >= 1024) {
+              await writeFile(dest, buf);
+              return "box";
+            }
+          }
+        } catch {
+          // fall through to card art
+        }
+      }
+    }
+  }
+
+  // 2. Fallback: marquee card art.
   const img = coverId(code);
   const sources = [
-    { tag: "media", url: `${MEDIA}/${img}.jpg` },
+    { tag: "card", url: `${MEDIA}/${img}.jpg` },
     { tag: "official", url: `${OFFICIAL}/${img}.png` },
   ];
   for (const src of sources) {
     try {
-      const res = await fetch(src.url);
+      const res = await fetchWithUA(src.url);
       if (!res.ok) continue;
       const buf = Buffer.from(await res.arrayBuffer());
-      if (buf.length < 1024) continue; // guard against error pages
+      if (buf.length < 1024) continue;
       await writeFile(dest, buf);
       return src.tag;
     } catch {
       // try next source
     }
   }
-  // Fallback: generated SVG placeholder (saved under the .jpg name; browsers sniff it).
+
+  // 3. Fallback: generated SVG placeholder (saved under the .jpg name; browsers sniff it).
   await writeFile(dest, placeholderSvg(code, name));
   return "placeholder";
 }
@@ -244,6 +353,15 @@ async function main() {
     fetchJson(`${API}/allSets/`),
     fetchJson(`${API}/allDecks/`),
   ]);
+
+  // tcgcsv group list (for sealed booster-box / deck images). Non-fatal if down.
+  let groups = null;
+  try {
+    groups = unwrap(await fetchJson(`${TCGCSV}/${OP_CATEGORY}/groups`));
+    console.log(`Fetched ${groups.length} TCGplayer groups from tcgcsv.com.`);
+  } catch (err) {
+    console.warn("tcgcsv groups unavailable, will fall back to card art:", err.message);
+  }
 
   // --- OP: all available OP booster sets ---------------------------------
   const opEntries = [];
@@ -281,12 +399,12 @@ async function main() {
   console.log(
     `Selected ${opEntries.length} OP, ${ebEntries.length} EB, ${stEntries.length} ST = ${releases.length} products.`,
   );
-  console.log("Downloading cover art ...");
+  console.log("Downloading cover art (sealed booster-box / deck images) ...");
 
-  const tally = { media: 0, official: 0, placeholder: 0 };
+  const tally = { box: 0, card: 0, official: 0, placeholder: 0 };
   const products = [];
   for (const r of releases) {
-    const tag = await downloadCover(r.code, r.name);
+    const tag = await downloadCover(r.code, r.name, r.category, groups);
     tally[tag]++;
     products.push({
       id: r.code,
@@ -306,7 +424,7 @@ async function main() {
   await writeFile(CATALOG_PATH, JSON.stringify(catalog, null, 2) + "\n", "utf8");
 
   console.log(
-    `\nDone. covers: media=${tally.media} official=${tally.official} placeholder=${tally.placeholder}`,
+    `\nDone. covers: box=${tally.box} card=${tally.card} official=${tally.official} placeholder=${tally.placeholder}`,
   );
   console.log(`Catalog written: ${path.relative(ROOT, CATALOG_PATH)} (${products.length} products)`);
 }
