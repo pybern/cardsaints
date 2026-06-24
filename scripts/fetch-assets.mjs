@@ -7,11 +7,16 @@
  * - Pulls the live list of sets / starter decks from optcgapi.com (free, no auth).
  * - Selects ALL available OP booster sets, the EB extra boosters, and the
  *   ST-01..ST-12 starter decks.
- * - Downloads a real sealed-product cover into public/products/{code}.jpg:
+ * - Downloads an English cover into public/products/{code}.jpg:
  *     1. the set's Booster Box (OP/EB) or Starter Deck box (ST) photo from the
  *        free tcgcsv.com TCGplayer mirror,
  *     2. falling back to the set's marquee "-001" card art (optcgapi / official CDN),
  *     3. falling back to a generated SVG placeholder so the build never breaks.
+ * - Downloads a Japanese cover into public/products/{code}-jp.png:
+ *     the set's marquee "-001" card art from the official Japanese CDN (free,
+ *     comprehensive; Japanese sealed-box photos aren't freely available for the
+ *     back catalogue), falling back to an SVG placeholder.
+ * Each product in the catalog therefore carries images.en + images.jp.
  * - Writes the product catalog (prices + mock inventory) to src/lib/catalog.json.
  *
  * Re-runnable and deterministic (no randomness). Run with: `node scripts/fetch-assets.mjs`
@@ -31,6 +36,8 @@ const CURRENCY = "HKD";
 const API = "https://optcgapi.com/api";
 const MEDIA = "https://optcgapi.com/media/static/Card_Images";
 const OFFICIAL = "https://en.onepiece-cardgame.com/images/cardlist/card";
+// Japanese official card-image CDN (authentic JP art for every set).
+const JP_CARD = "https://www.onepiece-cardgame.com/images/cardlist/card";
 
 // tcgcsv.com — free TCGplayer data mirror; used for sealed booster-box / deck images.
 const TCGCSV = "https://tcgcsv.com/tcgplayer";
@@ -328,6 +335,29 @@ async function downloadCover(code, name, category, groups) {
   return "placeholder";
 }
 
+/**
+ * Download the Japanese cover (official JP card art) to public/products/{code}-jp.png.
+ * Returns "jp-card" | "jp-placeholder".
+ */
+async function downloadJpCover(code, name) {
+  const dest = path.join(PRODUCTS_DIR, `${code}-jp.png`);
+  const img = coverId(code);
+  try {
+    const res = await fetchWithUA(`${JP_CARD}/${img}.png`);
+    if (res.ok) {
+      const buf = Buffer.from(await res.arrayBuffer());
+      if (buf.length >= 1024) {
+        await writeFile(dest, buf);
+        return "jp-card";
+      }
+    }
+  } catch {
+    // fall through to placeholder
+  }
+  await writeFile(dest, placeholderSvg(`${code} (JP)`, name));
+  return "jp-placeholder";
+}
+
 function placeholderSvg(code, name) {
   const safe = String(name || code).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   return Buffer.from(
@@ -401,21 +431,25 @@ async function main() {
   );
   console.log("Downloading cover art (sealed booster-box / deck images) ...");
 
-  const tally = { box: 0, card: 0, official: 0, placeholder: 0 };
+  const tally = { box: 0, card: 0, official: 0, placeholder: 0, "jp-card": 0, "jp-placeholder": 0 };
   const products = [];
   for (const r of releases) {
     const tag = await downloadCover(r.code, r.name, r.category, groups);
+    const jpTag = await downloadJpCover(r.code, r.name);
     tally[tag]++;
+    tally[jpTag]++;
+    const enImage = `/products/${r.code}.jpg`;
     products.push({
       id: r.code,
       code: r.code,
       category: r.category,
       name: r.name,
       releaseDate: RELEASE_DATES[r.code] || null,
-      image: `/products/${r.code}.jpg`,
+      image: enImage, // default / backwards-compatible
+      images: { en: enImage, jp: `/products/${r.code}-jp.png` },
       variants: buildVariants(r.code, r.category),
     });
-    process.stdout.write(`  ${r.code} (${tag})\n`);
+    process.stdout.write(`  ${r.code} (en:${tag}, jp:${jpTag})\n`);
   }
 
   ensureStockStates(products);
@@ -424,7 +458,8 @@ async function main() {
   await writeFile(CATALOG_PATH, JSON.stringify(catalog, null, 2) + "\n", "utf8");
 
   console.log(
-    `\nDone. covers: box=${tally.box} card=${tally.card} official=${tally.official} placeholder=${tally.placeholder}`,
+    `\nDone. EN covers: box=${tally.box} card=${tally.card} official=${tally.official} placeholder=${tally.placeholder}` +
+      ` | JP covers: card=${tally["jp-card"]} placeholder=${tally["jp-placeholder"]}`,
   );
   console.log(`Catalog written: ${path.relative(ROOT, CATALOG_PATH)} (${products.length} products)`);
 }

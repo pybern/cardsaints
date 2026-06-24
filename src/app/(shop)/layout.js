@@ -1,14 +1,16 @@
 import { InventoryProvider } from "@/components/cart/InventoryContext";
 import { CartProvider } from "@/components/cart/CartContext";
 import { CartUIProvider } from "@/components/cart/CartUIContext";
+import { LanguageProvider } from "@/components/shop/LanguageContext";
 import ShopHeader from "@/components/shop/ShopHeader";
 import CartDrawer from "@/components/cart/CartDrawer";
 
 export default function ShopLayout({ children }) {
   return (
-    <InventoryProvider>
-      <CartProvider>
-        <CartUIProvider>
+    <LanguageProvider>
+      <InventoryProvider>
+        <CartProvider>
+          <CartUIProvider>
           <div className="flex min-h-screen flex-col">
             <ShopHeader />
             <div className="flex-1">{children}</div>
@@ -25,8 +27,9 @@ export default function ShopLayout({ children }) {
               </div>
             </footer>
           </div>
-        </CartUIProvider>
-      </CartProvider>
-    </InventoryProvider>
+          </CartUIProvider>
+        </CartProvider>
+      </InventoryProvider>
+    </LanguageProvider>
   );
 }

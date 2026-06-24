@@ -25,6 +25,10 @@
       "name": "Romance Dawn",
       "releaseDate": "2022-12-02",
       "image": "/products/OP-01.jpg",
+      "images": {
+        "en": "/products/OP-01.jpg",
+        "jp": "/products/OP-01-jp.png"
+      },
       "variants": [
         {
           "id": "OP-01:box",
@@ -47,6 +51,10 @@
       "name": "Paramount War",
       "releaseDate": "2023-03-10",
       "image": "/products/OP-02.jpg",
+      "images": {
+        "en": "/products/OP-02.jpg",
+        "jp": "/products/OP-02-jp.png"
+      },
       "variants": [
         {
           "id": "OP-02:box",
@@ -69,6 +77,10 @@
       "name": "Pillars of Strength",
       "releaseDate": "2023-06-30",
       "image": "/products/OP-03.jpg",
+      "images": {
+        "en": "/products/OP-03.jpg",
+        "jp": "/products/OP-03-jp.png"
+      },
       "variants": [
         {
           "id": "OP-03:box",
@@ -91,6 +103,10 @@
       "name": "Kingdoms of Intrigue",
       "releaseDate": "2023-09-22",
       "image": "/products/OP-04.jpg",
+      "images": {
+        "en": "/products/OP-04.jpg",
+        "jp": "/products/OP-04-jp.png"
+      },
       "variants": [
         {
           "id": "OP-04:box",
@@ -113,6 +129,10 @@
       "name": "Awakening of the New Era",
       "releaseDate": "2023-12-08",
       "image": "/products/OP-05.jpg",
+      "images": {
+        "en": "/products/OP-05.jpg",
+        "jp": "/products/OP-05-jp.png"
+      },
       "variants": [
         {
           "id": "OP-05:box",
@@ -135,6 +155,10 @@
       "name": "Wings of the Captain",
       "releaseDate": "2024-03-08",
       "image": "/products/OP-06.jpg",
+      "images": {
+        "en": "/products/OP-06.jpg",
+        "jp": "/products/OP-06-jp.png"
+      },
       "variants": [
         {
           "id": "OP-06:box",
@@ -157,6 +181,10 @@
       "name": "500 Years in the Future",
       "releaseDate": "2024-06-28",
       "image": "/products/OP-07.jpg",
+      "images": {
+        "en": "/products/OP-07.jpg",
+        "jp": "/products/OP-07-jp.png"
+      },
       "variants": [
         {
           "id": "OP-07:box",
@@ -179,6 +207,10 @@
       "name": "Two Legends",
       "releaseDate": "2024-09-13",
       "image": "/products/OP-08.jpg",
+      "images": {
+        "en": "/products/OP-08.jpg",
+        "jp": "/products/OP-08-jp.png"
+      },
       "variants": [
         {
           "id": "OP-08:box",
@@ -201,6 +233,10 @@
       "name": "Emperors in the New World",
       "releaseDate": "2024-11-08",
       "image": "/products/OP-09.jpg",
+      "images": {
+        "en": "/products/OP-09.jpg",
+        "jp": "/products/OP-09-jp.png"
+      },
       "variants": [
         {
           "id": "OP-09:box",
@@ -223,6 +259,10 @@
       "name": "Royal Blood",
       "releaseDate": "2025-02-14",
       "image": "/products/OP-10.jpg",
+      "images": {
+        "en": "/products/OP-10.jpg",
+        "jp": "/products/OP-10-jp.png"
+      },
       "variants": [
         {
           "id": "OP-10:box",
@@ -245,6 +285,10 @@
       "name": "A Fist of Divine Speed",
       "releaseDate": "2025-05-30",
       "image": "/products/OP-11.jpg",
+      "images": {
+        "en": "/products/OP-11.jpg",
+        "jp": "/products/OP-11-jp.png"
+      },
       "variants": [
         {
           "id": "OP-11:box",
@@ -267,6 +311,10 @@
       "name": "Legacy of the Master",
       "releaseDate": "2025-08-29",
       "image": "/products/OP-12.jpg",
+      "images": {
+        "en": "/products/OP-12.jpg",
+        "jp": "/products/OP-12-jp.png"
+      },
       "variants": [
         {
           "id": "OP-12:box",
@@ -289,6 +337,10 @@
       "name": "Carrying On His Will",
       "releaseDate": "2025-11-21",
       "image": "/products/OP-13.jpg",
+      "images": {
+        "en": "/products/OP-13.jpg",
+        "jp": "/products/OP-13-jp.png"
+      },
       "variants": [
         {
           "id": "OP-13:box",
@@ -311,6 +363,10 @@
       "name": "The Azure Sea's Seven",
       "releaseDate": "2026-02-13",
       "image": "/products/OP-14.jpg",
+      "images": {
+        "en": "/products/OP-14.jpg",
+        "jp": "/products/OP-14-jp.png"
+      },
       "variants": [
         {
           "id": "OP-14:box",
@@ -333,6 +389,10 @@
       "name": "Adventure on Kami's Island",
       "releaseDate": "2026-05-29",
       "image": "/products/OP-15.jpg",
+      "images": {
+        "en": "/products/OP-15.jpg",
+        "jp": "/products/OP-15-jp.png"
+      },
       "variants": [
         {
           "id": "OP-15:box",
@@ -355,6 +415,10 @@
       "name": "The Time of Battle",
       "releaseDate": "2026-08-28",
       "image": "/products/OP-16.jpg",
+      "images": {
+        "en": "/products/OP-16.jpg",
+        "jp": "/products/OP-16-jp.png"
+      },
       "variants": [
         {
           "id": "OP-16:box",
@@ -377,6 +441,10 @@
       "name": "Extra Booster: Memorial Collection",
       "releaseDate": "2024-03-29",
       "image": "/products/EB-01.jpg",
+      "images": {
+        "en": "/products/EB-01.jpg",
+        "jp": "/products/EB-01-jp.png"
+      },
       "variants": [
         {
           "id": "EB-01:box",
@@ -399,6 +467,10 @@
       "name": "Extra Booster: Anime 25th Collection",
       "releaseDate": "2025-04-25",
       "image": "/products/EB-02.jpg",
+      "images": {
+        "en": "/products/EB-02.jpg",
+        "jp": "/products/EB-02-jp.png"
+      },
       "variants": [
         {
           "id": "EB-02:box",
@@ -421,6 +493,10 @@
       "name": "Straw Hat Crew",
       "releaseDate": "2022-12-02",
       "image": "/products/ST-01.jpg",
+      "images": {
+        "en": "/products/ST-01.jpg",
+        "jp": "/products/ST-01-jp.png"
+      },
       "variants": [
         {
           "id": "ST-01:deck",
@@ -443,6 +519,10 @@
       "name": "Worst Generation",
       "releaseDate": "2022-12-02",
       "image": "/products/ST-02.jpg",
+      "images": {
+        "en": "/products/ST-02.jpg",
+        "jp": "/products/ST-02-jp.png"
+      },
       "variants": [
         {
           "id": "ST-02:deck",
@@ -465,6 +545,10 @@
       "name": "The Seven Warlords of The Sea",
       "releaseDate": "2022-12-02",
       "image": "/products/ST-03.jpg",
+      "images": {
+        "en": "/products/ST-03.jpg",
+        "jp": "/products/ST-03-jp.png"
+      },
       "variants": [
         {
           "id": "ST-03:deck",
@@ -487,6 +571,10 @@
       "name": "Animal Kingdom Pirates",
       "releaseDate": "2022-12-02",
       "image": "/products/ST-04.jpg",
+      "images": {
+        "en": "/products/ST-04.jpg",
+        "jp": "/products/ST-04-jp.png"
+      },
       "variants": [
         {
           "id": "ST-04:deck",
@@ -509,6 +597,10 @@
       "name": "Film Edition",
       "releaseDate": "2023-03-10",
       "image": "/products/ST-05.jpg",
+      "images": {
+        "en": "/products/ST-05.jpg",
+        "jp": "/products/ST-05-jp.png"
+      },
       "variants": [
         {
           "id": "ST-05:deck",
@@ -531,6 +623,10 @@
       "name": "Absolute Justice",
       "releaseDate": "2023-03-10",
       "image": "/products/ST-06.jpg",
+      "images": {
+        "en": "/products/ST-06.jpg",
+        "jp": "/products/ST-06-jp.png"
+      },
       "variants": [
         {
           "id": "ST-06:deck",
@@ -553,6 +649,10 @@
       "name": "Big Mom Pirates",
       "releaseDate": "2023-06-30",
       "image": "/products/ST-07.jpg",
+      "images": {
+        "en": "/products/ST-07.jpg",
+        "jp": "/products/ST-07-jp.png"
+      },
       "variants": [
         {
           "id": "ST-07:deck",
@@ -575,6 +675,10 @@
       "name": "Monkey.D.Luffy",
       "releaseDate": "2023-09-22",
       "image": "/products/ST-08.jpg",
+      "images": {
+        "en": "/products/ST-08.jpg",
+        "jp": "/products/ST-08-jp.png"
+      },
       "variants": [
         {
           "id": "ST-08:deck",
@@ -597,6 +701,10 @@
       "name": "Yamato",
       "releaseDate": "2023-12-08",
       "image": "/products/ST-09.jpg",
+      "images": {
+        "en": "/products/ST-09.jpg",
+        "jp": "/products/ST-09-jp.png"
+      },
       "variants": [
         {
           "id": "ST-09:deck",
@@ -619,6 +727,10 @@
       "name": "Ultra Deck: The Three Captains",
       "releaseDate": "2024-03-08",
       "image": "/products/ST-10.jpg",
+      "images": {
+        "en": "/products/ST-10.jpg",
+        "jp": "/products/ST-10-jp.png"
+      },
       "variants": [
         {
           "id": "ST-10:deck",
@@ -641,6 +753,10 @@
       "name": "Uta",
       "releaseDate": "2024-03-08",
       "image": "/products/ST-11.jpg",
+      "images": {
+        "en": "/products/ST-11.jpg",
+        "jp": "/products/ST-11-jp.png"
+      },
       "variants": [
         {
           "id": "ST-11:deck",
@@ -663,6 +779,10 @@
       "name": "Zoro and Sanji",
       "releaseDate": "2024-06-28",
       "image": "/products/ST-12.jpg",
+      "images": {
+        "en": "/products/ST-12.jpg",
+        "jp": "/products/ST-12-jp.png"
+      },
       "variants": [
         {
           "id": "ST-12:deck",

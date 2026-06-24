@@ -34,6 +34,7 @@ function reducer(state, action) {
             name: product.name,
             category: product.category,
             image: product.image,
+            images: product.images,
             variantLabel: variant.label,
             price: variant.price,
           },

@@ -24,6 +24,8 @@ export default function BuyPage() {
         <p className="mt-4 text-lg leading-relaxed text-muted">
           Sealed product from across the line — Booster Sets, Extra Boosters, and Starter
           Decks. Sourced by the case, sold by the box, deck, or display. All prices in HKD.
+          Use the <span className="font-semibold text-foreground">EN / JP</span> switch up top
+          to view the English or Japanese edition art.
         </p>
 
         <nav className="mt-6 flex flex-wrap gap-3">
