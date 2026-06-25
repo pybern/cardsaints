@@ -33,7 +33,7 @@
           "id": "OP-01:case",
           "label": "Sealed Case (12 boxes)",
           "price": 11923,
-          "stock": 18
+          "stock": 0
         }
       ]
     },
@@ -50,13 +50,13 @@
           "id": "OP-02:box",
           "label": "Booster Box (24 packs)",
           "price": 1104,
-          "stock": 12
+          "stock": 0
         },
         {
           "id": "OP-02:case",
           "label": "Sealed Case (12 boxes)",
           "price": 11923,
-          "stock": 3
+          "stock": 0
         }
       ]
     },
@@ -73,13 +73,13 @@
           "id": "OP-03:box",
           "label": "Booster Box (24 packs)",
           "price": 1104,
-          "stock": 27
+          "stock": 0
         },
         {
           "id": "OP-03:case",
           "label": "Sealed Case (12 boxes)",
           "price": 11923,
-          "stock": 30
+          "stock": 0
         }
       ]
     },
@@ -96,13 +96,13 @@
           "id": "OP-04:box",
           "label": "Booster Box (24 packs)",
           "price": 897,
-          "stock": 2
+          "stock": 0
         },
         {
           "id": "OP-04:case",
           "label": "Sealed Case (12 boxes)",
           "price": 9688,
-          "stock": 37
+          "stock": 0
         }
       ]
     },
@@ -119,13 +119,13 @@
           "id": "OP-05:box",
           "label": "Booster Box (24 packs)",
           "price": 897,
-          "stock": 5
+          "stock": 0
         },
         {
           "id": "OP-05:case",
           "label": "Sealed Case (12 boxes)",
           "price": 9688,
-          "stock": 8
+          "stock": 0
         }
       ]
     },
@@ -142,13 +142,13 @@
           "id": "OP-06:box",
           "label": "Booster Box (24 packs)",
           "price": 897,
-          "stock": 18
+          "stock": 0
         },
         {
           "id": "OP-06:case",
           "label": "Sealed Case (12 boxes)",
           "price": 9688,
-          "stock": 23
+          "stock": 0
         }
       ]
     },
@@ -165,13 +165,13 @@
           "id": "OP-07:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 13
+          "stock": 0
         },
         {
           "id": "OP-07:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 12
+          "stock": 0
         }
       ]
     },
@@ -188,13 +188,13 @@
           "id": "OP-08:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 14
+          "stock": 0
         },
         {
           "id": "OP-08:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 5
+          "stock": 0
         }
       ]
     },
@@ -211,7 +211,7 @@
           "id": "OP-09:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 31
+          "stock": 0
         },
         {
           "id": "OP-09:case",
@@ -234,13 +234,13 @@
           "id": "OP-10:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 13
+          "stock": 0
         },
         {
           "id": "OP-10:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 12
+          "stock": 0
         }
       ]
     },
@@ -257,13 +257,13 @@
           "id": "OP-11:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 32
+          "stock": 0
         },
         {
           "id": "OP-11:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 35
+          "stock": 0
         }
       ]
     },
@@ -280,13 +280,13 @@
           "id": "OP-12:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 1
+          "stock": 0
         },
         {
           "id": "OP-12:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 4
+          "stock": 0
         }
       ]
     },
@@ -303,13 +303,13 @@
           "id": "OP-13:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 24
+          "stock": 0
         },
         {
           "id": "OP-13:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 7
+          "stock": 0
         }
       ]
     },
@@ -326,13 +326,13 @@
           "id": "OP-14:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 31
+          "stock": 0
         },
         {
           "id": "OP-14:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 30
+          "stock": 0
         }
       ]
     },
@@ -355,7 +355,7 @@
           "id": "OP-15:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 7
+          "stock": 0
         }
       ]
     },
@@ -372,13 +372,13 @@
           "id": "OP-16:box",
           "label": "Booster Box (24 packs)",
           "price": 690,
-          "stock": 29
+          "stock": 0
         },
         {
           "id": "OP-16:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7452,
-          "stock": 16
+          "stock": 0
         }
       ]
     },
@@ -401,7 +401,7 @@
           "id": "EB-01:case",
           "label": "Sealed Case (12 boxes)",
           "price": 7862,
-          "stock": 24
+          "stock": 0
         }
       ]
     },
@@ -418,13 +418,13 @@
           "id": "EB-02:box",
           "label": "Booster Box (24 packs)",
           "price": 520,
-          "stock": 26
+          "stock": 0
         },
         {
           "id": "EB-02:case",
           "label": "Sealed Case (12 boxes)",
           "price": 5616,
-          "stock": 3
+          "stock": 0
         }
       ]
     },

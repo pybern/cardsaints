@@ -29,6 +29,11 @@ const CATALOG_PATH = path.join(ROOT, "src", "lib", "catalog.json");
 const CURRENCY = "HKD";
 const API = "https://optcgapi.com/api";
 
+// Temporary trading state: when true, all released products show "Sold out".
+// Pre-orders stay reservable (they are upcoming, not current stock).
+// Flip back to false to restore normal mock inventory.
+const ALL_OUT_OF_STOCK = true;
+
 // Japanese official CDN. Product (pack) renders live under /images/products/...,
 // and per-card art under /images/cardlist/card/... (used as a fallback).
 const JP_SITE = "https://www.onepiece-cardgame.com";
@@ -164,8 +169,9 @@ function buildVariants(code, category, preorder = false) {
     id: `${code}:${d.key}`,
     label: d.label,
     price: d.price,
-    // Pre-orders are always orderable (no sell-out); released sets get mock stock.
-    stock: preorder ? 99 : mockStock(code, d.key),
+    // Pre-orders are always orderable (no sell-out). Released sets get mock
+    // stock, or zero while the shop is temporarily marked out of stock.
+    stock: preorder ? 99 : ALL_OUT_OF_STOCK ? 0 : mockStock(code, d.key),
   }));
 }
 
@@ -174,6 +180,7 @@ function buildVariants(code, category, preorder = false) {
  * states are always demonstrable. Mutates the products array in place.
  */
 function ensureStockStates(products) {
+  if (ALL_OUT_OF_STOCK) return; // everything is already zeroed
   for (const cat of ["OP", "EB"]) {
     const inCat = products.filter((p) => p.category === cat);
     if (inCat.length === 0) continue;
