@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { useCart } from "@/components/cart/CartContext";
 import { useCartUI } from "@/components/cart/CartUIContext";
-import { useLanguage } from "@/components/shop/LanguageContext";
 
 export default function ShopHeader() {
   const { count } = useCart();
   const { openCart } = useCartUI();
-  const { lang, setLang } = useLanguage();
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur">
@@ -17,7 +15,7 @@ export default function ShopHeader() {
           <Link href="/" className="text-xl font-semibold tracking-tight">
             Card Saints
           </Link>
-          <span className="hidden text-sm text-muted sm:inline">· One Piece TCG</span>
+          <span className="hidden text-sm text-muted sm:inline">· One Piece TCG (JP)</span>
         </div>
 
         <nav className="flex items-center gap-4 sm:gap-6">
@@ -27,33 +25,6 @@ export default function ShopHeader() {
           >
             Releases
           </Link>
-
-          {/* Edition language toggle */}
-          <div
-            className="flex items-center rounded-full border border-border bg-card p-0.5 text-xs font-medium"
-            role="group"
-            aria-label="Card edition language"
-          >
-            {[
-              { id: "en", label: "EN" },
-              { id: "jp", label: "JP" },
-            ].map((opt) => {
-              const active = lang === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setLang(opt.id)}
-                  aria-pressed={active}
-                  className={`rounded-full px-3 py-1 transition ${
-                    active ? "bg-accent text-accent-foreground" : "text-muted hover:text-foreground"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-          </div>
 
           <button
             type="button"

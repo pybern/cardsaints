@@ -3,9 +3,9 @@ import catalog from "@/lib/catalog.json";
 import CategorySection from "@/components/shop/CategorySection";
 
 export const metadata = {
-  title: "Buy One Piece TCG Releases — Card Saints",
+  title: "Buy One Piece TCG Releases (Japanese) — Card Saints",
   description:
-    "Shop sealed One Piece TCG product from Card Saints — Booster Sets (OP), Extra Boosters (EB), and Starter Decks (ST). Booster boxes, sealed cases, and displays. Prices in HKD.",
+    "Shop sealed Japanese One Piece TCG product from Card Saints — Booster Sets (OP) and Extra Boosters (EB). Booster boxes and sealed cases. Prices in HKD.",
 };
 
 export default function BuyPage() {
@@ -16,16 +16,14 @@ export default function BuyPage() {
     <main className="mx-auto max-w-6xl px-6 py-12">
       <header className="mb-12 max-w-3xl">
         <p className="text-sm font-medium uppercase tracking-widest text-accent">
-          One Piece Card Game
+          One Piece Card Game · Japanese edition
         </p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
           Buy current releases
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-muted">
-          Sealed product from across the line — Booster Sets, Extra Boosters, and Starter
-          Decks. Sourced by the case, sold by the box, deck, or display. All prices in HKD.
-          Use the <span className="font-semibold text-foreground">EN / JP</span> switch up top
-          to view the English or Japanese edition art.
+          Sealed Japanese product from across the line — Booster Sets and Extra Boosters.
+          Sourced by the case, sold by the box. All prices in HKD.
         </p>
 
         <nav className="mt-6 flex flex-wrap gap-3">

@@ -1,5 +1,6 @@
 {
   "currency": "HKD",
+  "edition": "Japanese",
   "categories": [
     {
       "key": "OP",
@@ -10,11 +11,6 @@
       "key": "EB",
       "label": "Extra Boosters",
       "blurb": "Limited between-set releases. Smaller print runs, reliably tight supply, collector demand that outlives the shelf."
-    },
-    {
-      "key": "ST",
-      "label": "Starter Decks",
-      "blurb": "Ready-to-play constructed decks. The entry point for new players and a steady mover by the display."
     }
   ],
   "products": [
@@ -24,11 +20,7 @@
       "category": "OP",
       "name": "Romance Dawn",
       "releaseDate": "2022-12-02",
-      "image": "/products/OP-01.jpg",
-      "images": {
-        "en": "/products/OP-01.jpg",
-        "jp": "/products/OP-01-jp.png"
-      },
+      "image": "/products/OP-01.png",
       "variants": [
         {
           "id": "OP-01:box",
@@ -50,11 +42,7 @@
       "category": "OP",
       "name": "Paramount War",
       "releaseDate": "2023-03-10",
-      "image": "/products/OP-02.jpg",
-      "images": {
-        "en": "/products/OP-02.jpg",
-        "jp": "/products/OP-02-jp.png"
-      },
+      "image": "/products/OP-02.png",
       "variants": [
         {
           "id": "OP-02:box",
@@ -76,11 +64,7 @@
       "category": "OP",
       "name": "Pillars of Strength",
       "releaseDate": "2023-06-30",
-      "image": "/products/OP-03.jpg",
-      "images": {
-        "en": "/products/OP-03.jpg",
-        "jp": "/products/OP-03-jp.png"
-      },
+      "image": "/products/OP-03.png",
       "variants": [
         {
           "id": "OP-03:box",
@@ -102,11 +86,7 @@
       "category": "OP",
       "name": "Kingdoms of Intrigue",
       "releaseDate": "2023-09-22",
-      "image": "/products/OP-04.jpg",
-      "images": {
-        "en": "/products/OP-04.jpg",
-        "jp": "/products/OP-04-jp.png"
-      },
+      "image": "/products/OP-04.png",
       "variants": [
         {
           "id": "OP-04:box",
@@ -128,11 +108,7 @@
       "category": "OP",
       "name": "Awakening of the New Era",
       "releaseDate": "2023-12-08",
-      "image": "/products/OP-05.jpg",
-      "images": {
-        "en": "/products/OP-05.jpg",
-        "jp": "/products/OP-05-jp.png"
-      },
+      "image": "/products/OP-05.png",
       "variants": [
         {
           "id": "OP-05:box",
@@ -154,11 +130,7 @@
       "category": "OP",
       "name": "Wings of the Captain",
       "releaseDate": "2024-03-08",
-      "image": "/products/OP-06.jpg",
-      "images": {
-        "en": "/products/OP-06.jpg",
-        "jp": "/products/OP-06-jp.png"
-      },
+      "image": "/products/OP-06.png",
       "variants": [
         {
           "id": "OP-06:box",
@@ -180,11 +152,7 @@
       "category": "OP",
       "name": "500 Years in the Future",
       "releaseDate": "2024-06-28",
-      "image": "/products/OP-07.jpg",
-      "images": {
-        "en": "/products/OP-07.jpg",
-        "jp": "/products/OP-07-jp.png"
-      },
+      "image": "/products/OP-07.png",
       "variants": [
         {
           "id": "OP-07:box",
@@ -206,11 +174,7 @@
       "category": "OP",
       "name": "Two Legends",
       "releaseDate": "2024-09-13",
-      "image": "/products/OP-08.jpg",
-      "images": {
-        "en": "/products/OP-08.jpg",
-        "jp": "/products/OP-08-jp.png"
-      },
+      "image": "/products/OP-08.png",
       "variants": [
         {
           "id": "OP-08:box",
@@ -232,11 +196,7 @@
       "category": "OP",
       "name": "Emperors in the New World",
       "releaseDate": "2024-11-08",
-      "image": "/products/OP-09.jpg",
-      "images": {
-        "en": "/products/OP-09.jpg",
-        "jp": "/products/OP-09-jp.png"
-      },
+      "image": "/products/OP-09.png",
       "variants": [
         {
           "id": "OP-09:box",
@@ -258,11 +218,7 @@
       "category": "OP",
       "name": "Royal Blood",
       "releaseDate": "2025-02-14",
-      "image": "/products/OP-10.jpg",
-      "images": {
-        "en": "/products/OP-10.jpg",
-        "jp": "/products/OP-10-jp.png"
-      },
+      "image": "/products/OP-10.png",
       "variants": [
         {
           "id": "OP-10:box",
@@ -284,11 +240,7 @@
       "category": "OP",
       "name": "A Fist of Divine Speed",
       "releaseDate": "2025-05-30",
-      "image": "/products/OP-11.jpg",
-      "images": {
-        "en": "/products/OP-11.jpg",
-        "jp": "/products/OP-11-jp.png"
-      },
+      "image": "/products/OP-11.png",
       "variants": [
         {
           "id": "OP-11:box",
@@ -310,11 +262,7 @@
       "category": "OP",
       "name": "Legacy of the Master",
       "releaseDate": "2025-08-29",
-      "image": "/products/OP-12.jpg",
-      "images": {
-        "en": "/products/OP-12.jpg",
-        "jp": "/products/OP-12-jp.png"
-      },
+      "image": "/products/OP-12.png",
       "variants": [
         {
           "id": "OP-12:box",
@@ -336,11 +284,7 @@
       "category": "OP",
       "name": "Carrying On His Will",
       "releaseDate": "2025-11-21",
-      "image": "/products/OP-13.jpg",
-      "images": {
-        "en": "/products/OP-13.jpg",
-        "jp": "/products/OP-13-jp.png"
-      },
+      "image": "/products/OP-13.png",
       "variants": [
         {
           "id": "OP-13:box",
@@ -362,11 +306,7 @@
       "category": "OP",
       "name": "The Azure Sea's Seven",
       "releaseDate": "2026-02-13",
-      "image": "/products/OP-14.jpg",
-      "images": {
-        "en": "/products/OP-14.jpg",
-        "jp": "/products/OP-14-jp.png"
-      },
+      "image": "/products/OP-14.png",
       "variants": [
         {
           "id": "OP-14:box",
@@ -388,11 +328,7 @@
       "category": "OP",
       "name": "Adventure on Kami's Island",
       "releaseDate": "2026-05-29",
-      "image": "/products/OP-15.jpg",
-      "images": {
-        "en": "/products/OP-15.jpg",
-        "jp": "/products/OP-15-jp.png"
-      },
+      "image": "/products/OP-15.png",
       "variants": [
         {
           "id": "OP-15:box",
@@ -414,11 +350,7 @@
       "category": "OP",
       "name": "The Time of Battle",
       "releaseDate": "2026-08-28",
-      "image": "/products/OP-16.jpg",
-      "images": {
-        "en": "/products/OP-16.jpg",
-        "jp": "/products/OP-16-jp.png"
-      },
+      "image": "/products/OP-16.png",
       "variants": [
         {
           "id": "OP-16:box",
@@ -440,11 +372,7 @@
       "category": "EB",
       "name": "Extra Booster: Memorial Collection",
       "releaseDate": "2024-03-29",
-      "image": "/products/EB-01.jpg",
-      "images": {
-        "en": "/products/EB-01.jpg",
-        "jp": "/products/EB-01-jp.png"
-      },
+      "image": "/products/EB-01.png",
       "variants": [
         {
           "id": "EB-01:box",
@@ -466,11 +394,7 @@
       "category": "EB",
       "name": "Extra Booster: Anime 25th Collection",
       "releaseDate": "2025-04-25",
-      "image": "/products/EB-02.jpg",
-      "images": {
-        "en": "/products/EB-02.jpg",
-        "jp": "/products/EB-02-jp.png"
-      },
+      "image": "/products/EB-02.png",
       "variants": [
         {
           "id": "EB-02:box",
@@ -483,318 +407,6 @@
           "label": "Sealed Case (12 boxes)",
           "price": 5616,
           "stock": 3
-        }
-      ]
-    },
-    {
-      "id": "ST-01",
-      "code": "ST-01",
-      "category": "ST",
-      "name": "Straw Hat Crew",
-      "releaseDate": "2022-12-02",
-      "image": "/products/ST-01.jpg",
-      "images": {
-        "en": "/products/ST-01.jpg",
-        "jp": "/products/ST-01-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-01:deck",
-          "label": "Single Deck",
-          "price": 143,
-          "stock": 0
-        },
-        {
-          "id": "ST-01:display",
-          "label": "Display (6 decks)",
-          "price": 789,
-          "stock": 0
-        }
-      ]
-    },
-    {
-      "id": "ST-02",
-      "code": "ST-02",
-      "category": "ST",
-      "name": "Worst Generation",
-      "releaseDate": "2022-12-02",
-      "image": "/products/ST-02.jpg",
-      "images": {
-        "en": "/products/ST-02.jpg",
-        "jp": "/products/ST-02-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-02:deck",
-          "label": "Single Deck",
-          "price": 143,
-          "stock": 28
-        },
-        {
-          "id": "ST-02:display",
-          "label": "Display (6 decks)",
-          "price": 789,
-          "stock": 3
-        }
-      ]
-    },
-    {
-      "id": "ST-03",
-      "code": "ST-03",
-      "category": "ST",
-      "name": "The Seven Warlords of The Sea",
-      "releaseDate": "2022-12-02",
-      "image": "/products/ST-03.jpg",
-      "images": {
-        "en": "/products/ST-03.jpg",
-        "jp": "/products/ST-03-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-03:deck",
-          "label": "Single Deck",
-          "price": 143,
-          "stock": 19
-        },
-        {
-          "id": "ST-03:display",
-          "label": "Display (6 decks)",
-          "price": 789,
-          "stock": 8
-        }
-      ]
-    },
-    {
-      "id": "ST-04",
-      "code": "ST-04",
-      "category": "ST",
-      "name": "Animal Kingdom Pirates",
-      "releaseDate": "2022-12-02",
-      "image": "/products/ST-04.jpg",
-      "images": {
-        "en": "/products/ST-04.jpg",
-        "jp": "/products/ST-04-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-04:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 36
-        },
-        {
-          "id": "ST-04:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 3
-        }
-      ]
-    },
-    {
-      "id": "ST-05",
-      "code": "ST-05",
-      "category": "ST",
-      "name": "Film Edition",
-      "releaseDate": "2023-03-10",
-      "image": "/products/ST-05.jpg",
-      "images": {
-        "en": "/products/ST-05.jpg",
-        "jp": "/products/ST-05-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-05:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 39
-        },
-        {
-          "id": "ST-05:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 18
-        }
-      ]
-    },
-    {
-      "id": "ST-06",
-      "code": "ST-06",
-      "category": "ST",
-      "name": "Absolute Justice",
-      "releaseDate": "2023-03-10",
-      "image": "/products/ST-06.jpg",
-      "images": {
-        "en": "/products/ST-06.jpg",
-        "jp": "/products/ST-06-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-06:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 18
-        },
-        {
-          "id": "ST-06:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 21
-        }
-      ]
-    },
-    {
-      "id": "ST-07",
-      "code": "ST-07",
-      "category": "ST",
-      "name": "Big Mom Pirates",
-      "releaseDate": "2023-06-30",
-      "image": "/products/ST-07.jpg",
-      "images": {
-        "en": "/products/ST-07.jpg",
-        "jp": "/products/ST-07-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-07:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 0
-        },
-        {
-          "id": "ST-07:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 22
-        }
-      ]
-    },
-    {
-      "id": "ST-08",
-      "code": "ST-08",
-      "category": "ST",
-      "name": "Monkey.D.Luffy",
-      "releaseDate": "2023-09-22",
-      "image": "/products/ST-08.jpg",
-      "images": {
-        "en": "/products/ST-08.jpg",
-        "jp": "/products/ST-08-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-08:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 4
-        },
-        {
-          "id": "ST-08:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 0
-        }
-      ]
-    },
-    {
-      "id": "ST-09",
-      "code": "ST-09",
-      "category": "ST",
-      "name": "Yamato",
-      "releaseDate": "2023-12-08",
-      "image": "/products/ST-09.jpg",
-      "images": {
-        "en": "/products/ST-09.jpg",
-        "jp": "/products/ST-09-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-09:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 0
-        },
-        {
-          "id": "ST-09:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 10
-        }
-      ]
-    },
-    {
-      "id": "ST-10",
-      "code": "ST-10",
-      "category": "ST",
-      "name": "Ultra Deck: The Three Captains",
-      "releaseDate": "2024-03-08",
-      "image": "/products/ST-10.jpg",
-      "images": {
-        "en": "/products/ST-10.jpg",
-        "jp": "/products/ST-10-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-10:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 19
-        },
-        {
-          "id": "ST-10:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 0
-        }
-      ]
-    },
-    {
-      "id": "ST-11",
-      "code": "ST-11",
-      "category": "ST",
-      "name": "Uta",
-      "releaseDate": "2024-03-08",
-      "image": "/products/ST-11.jpg",
-      "images": {
-        "en": "/products/ST-11.jpg",
-        "jp": "/products/ST-11-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-11:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 30
-        },
-        {
-          "id": "ST-11:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 11
-        }
-      ]
-    },
-    {
-      "id": "ST-12",
-      "code": "ST-12",
-      "category": "ST",
-      "name": "Zoro and Sanji",
-      "releaseDate": "2024-06-28",
-      "image": "/products/ST-12.jpg",
-      "images": {
-        "en": "/products/ST-12.jpg",
-        "jp": "/products/ST-12-jp.png"
-      },
-      "variants": [
-        {
-          "id": "ST-12:deck",
-          "label": "Single Deck",
-          "price": 95,
-          "stock": 35
-        },
-        {
-          "id": "ST-12:display",
-          "label": "Display (6 decks)",
-          "price": 524,
-          "stock": 12
         }
       ]
     }

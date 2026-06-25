@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useCart } from "@/components/cart/CartContext";
 import { useCartUI } from "@/components/cart/CartUIContext";
 import { useInventory } from "@/components/cart/InventoryContext";
-import { useLanguage, productImage } from "@/components/shop/LanguageContext";
 import { formatPrice } from "@/lib/format";
 import catalog from "@/lib/catalog.json";
 
@@ -13,7 +12,6 @@ export default function CartDrawer() {
   const { items, subtotal, setQty, remove } = useCart();
   const { open, closeCart } = useCartUI();
   const { getStock } = useInventory();
-  const { lang } = useLanguage();
   const currency = catalog.currency;
 
   return (
@@ -68,7 +66,7 @@ export default function CartDrawer() {
                   <li key={item.variantId} className="flex gap-3 py-4">
                     <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border border-border bg-white">
                       <Image
-                        src={productImage(item, lang)}
+                        src={item.image}
                         alt={item.name}
                         fill
                         sizes="64px"

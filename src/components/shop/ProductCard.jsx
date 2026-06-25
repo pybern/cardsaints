@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useCart } from "@/components/cart/CartContext";
 import { useInventory } from "@/components/cart/InventoryContext";
 import { useCartUI } from "@/components/cart/CartUIContext";
-import { useLanguage, productImage } from "@/components/shop/LanguageContext";
 import {
   formatPrice,
   formatReleaseDate,
@@ -27,7 +26,6 @@ export default function ProductCard({ product, currency }) {
   const { add } = useCart();
   const { getStock } = useInventory();
   const { openCart } = useCartUI();
-  const { lang } = useLanguage();
 
   const variant = product.variants.find((v) => v.id === selectedId) ?? product.variants[0];
   const stock = getStock(variant.id);
@@ -55,18 +53,14 @@ export default function ProductCard({ product, currency }) {
     <article className="flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md">
       <div className="relative aspect-square bg-white">
         <Image
-          key={lang}
-          src={productImage(product, lang)}
-          alt={`${product.name} (${product.code}) ${lang === "jp" ? "Japanese edition" : "sealed product"}`}
+          src={product.image}
+          alt={`${product.name} (${product.code}) Japanese sealed product`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
           className="object-contain p-4"
         />
         <span className="absolute left-3 top-3 rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold tracking-wide text-background">
           {product.code}
-        </span>
-        <span className="absolute right-3 bottom-3 rounded-full border border-border bg-card/90 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted">
-          {lang === "jp" ? "JP" : "EN"}
         </span>
         {soldOut && (
           <span className="absolute right-3 top-3 rounded-full bg-red-700 px-2.5 py-1 text-xs font-semibold text-white">

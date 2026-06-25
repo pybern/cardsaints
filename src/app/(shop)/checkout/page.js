@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/components/cart/CartContext";
 import { useInventory } from "@/components/cart/InventoryContext";
-import { useLanguage, productImage } from "@/components/shop/LanguageContext";
 import { formatPrice } from "@/lib/format";
 import catalog from "@/lib/catalog.json";
 
@@ -38,7 +37,6 @@ export default function CheckoutPage() {
   const currency = catalog.currency;
   const { items, subtotal, clear } = useCart();
   const { decrement } = useInventory();
-  const { lang } = useLanguage();
 
   const [form, setForm] = useState({ name: "", email: "", country: "Hong Kong" });
   const [payment, setPayment] = useState("bank");
@@ -226,7 +224,7 @@ export default function CheckoutPage() {
               <li key={item.variantId} className="flex gap-3">
                 <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded border border-border bg-white">
                   <Image
-                    src={productImage(item, lang)}
+                    src={item.image}
                     alt={item.name}
                     fill
                     sizes="56px"
