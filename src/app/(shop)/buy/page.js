@@ -8,9 +8,17 @@ export const metadata = {
     "Shop sealed Japanese One Piece TCG product from Card Saints — Booster Sets (OP) and Extra Boosters (EB). Booster boxes and sealed cases. Prices in HKD.",
 };
 
+const PREORDER_CATEGORY = {
+  key: "preorders",
+  label: "Pre-orders",
+  blurb:
+    "Upcoming sets — reserve now and your boxes ship the moment they release. Artwork shown is a placeholder until each set is revealed.",
+};
+
 export default function BuyPage() {
   const { categories, products, currency } = catalog;
-  const productsByCategory = (key) => products.filter((p) => p.category === key);
+  const preorders = products.filter((p) => p.preorder);
+  const productsByCategory = (key) => products.filter((p) => p.category === key && !p.preorder);
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
@@ -27,6 +35,14 @@ export default function BuyPage() {
         </p>
 
         <nav className="mt-6 flex flex-wrap gap-3">
+          {preorders.length > 0 && (
+            <Link
+              href="#preorders"
+              className="rounded-full border border-accent bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent transition hover:bg-accent/20"
+            >
+              Pre-orders <span className="opacity-70">({preorders.length})</span>
+            </Link>
+          )}
           {categories.map((c) => (
             <Link
               key={c.key}
@@ -41,6 +57,16 @@ export default function BuyPage() {
       </header>
 
       <div className="flex flex-col gap-16">
+        {preorders.length > 0 && (
+          <CategorySection
+            category={{
+              ...PREORDER_CATEGORY,
+              badge: `Reserve now · ${preorders.length} upcoming`,
+            }}
+            products={preorders}
+            currency={currency}
+          />
+        )}
         {categories.map((category) => (
           <CategorySection
             key={category.key}

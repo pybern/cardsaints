@@ -7,7 +7,7 @@ export default function CategorySection({ category, products, currency }) {
         <div className="flex items-baseline gap-3">
           <h2 className="text-2xl font-semibold tracking-tight">{category.label}</h2>
           <span className="rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-muted">
-            {category.key} · {products.length} releases
+            {category.badge ?? `${category.key} · ${products.length} releases`}
           </span>
         </div>
         <p className="mt-2 max-w-2xl text-muted">{category.blurb}</p>
