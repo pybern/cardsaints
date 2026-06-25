@@ -27,10 +27,11 @@ export default function ProductCard({ product, currency }) {
   const { getStock } = useInventory();
   const { openCart } = useCartUI();
 
+  const preorder = !!product.preorder;
   const variant = product.variants.find((v) => v.id === selectedId) ?? product.variants[0];
   const stock = getStock(variant.id);
   const state = stockState(stock);
-  const soldOut = state === "out";
+  const soldOut = !preorder && state === "out";
 
   const clampedQty = Math.min(qty, Math.max(1, stock));
 
@@ -62,18 +63,28 @@ export default function ProductCard({ product, currency }) {
         <span className="absolute left-3 top-3 rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold tracking-wide text-background">
           {product.code}
         </span>
-        {soldOut && (
-          <span className="absolute right-3 top-3 rounded-full bg-red-700 px-2.5 py-1 text-xs font-semibold text-white">
-            Sold out
+        {preorder ? (
+          <span className="absolute right-3 top-3 rounded-full bg-accent px-2.5 py-1 text-xs font-semibold text-accent-foreground">
+            Pre-order
           </span>
+        ) : (
+          soldOut && (
+            <span className="absolute right-3 top-3 rounded-full bg-red-700 px-2.5 py-1 text-xs font-semibold text-white">
+              Sold out
+            </span>
+          )
         )}
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div>
           <h3 className="text-lg font-semibold leading-tight">{product.name}</h3>
-          {releaseDate && (
-            <p className="mt-0.5 text-xs text-muted">Released {releaseDate}</p>
+          {preorder ? (
+            <p className="mt-0.5 text-xs font-medium text-accent">
+              Pre-order{releaseDate ? ` · ships ${releaseDate}` : " · ships on release"}
+            </p>
+          ) : (
+            releaseDate && <p className="mt-0.5 text-xs text-muted">Released {releaseDate}</p>
           )}
         </div>
 
@@ -102,7 +113,11 @@ export default function ProductCard({ product, currency }) {
         <div className="mt-auto flex items-end justify-between">
           <div>
             <p className="text-xl font-semibold">{formatPrice(variant.price, currency)}</p>
-            <p className={`text-xs font-medium ${STATE_STYLES[state]}`}>{stockLabel(stock)}</p>
+            {preorder ? (
+              <p className="text-xs font-medium text-accent">Reserve now</p>
+            ) : (
+              <p className={`text-xs font-medium ${STATE_STYLES[state]}`}>{stockLabel(stock)}</p>
+            )}
           </div>
 
           {/* Quantity stepper */}
@@ -135,9 +150,21 @@ export default function ProductCard({ product, currency }) {
           type="button"
           onClick={handleAdd}
           disabled={soldOut}
-          className="rounded-lg bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition hover:bg-accent disabled:cursor-not-allowed disabled:bg-muted/40 disabled:text-muted"
+          className={`rounded-lg px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:bg-muted/40 disabled:text-muted ${
+            preorder
+              ? "bg-accent text-accent-foreground hover:bg-foreground hover:text-background"
+              : "bg-foreground text-background hover:bg-accent"
+          }`}
         >
-          {soldOut ? "Sold out" : justAdded ? "Added ✓ — add more" : "Add to cart"}
+          {soldOut
+            ? "Sold out"
+            : preorder
+              ? justAdded
+                ? "Reserved ✓ — add more"
+                : "Pre-order"
+              : justAdded
+                ? "Added ✓ — add more"
+                : "Add to cart"}
         </button>
       </div>
     </article>

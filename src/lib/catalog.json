@@ -20,6 +20,7 @@
       "category": "OP",
       "name": "Romance Dawn",
       "releaseDate": "2022-12-02",
+      "preorder": false,
       "image": "/products/OP-01.png",
       "variants": [
         {
@@ -42,6 +43,7 @@
       "category": "OP",
       "name": "Paramount War",
       "releaseDate": "2023-03-10",
+      "preorder": false,
       "image": "/products/OP-02.png",
       "variants": [
         {
@@ -64,6 +66,7 @@
       "category": "OP",
       "name": "Pillars of Strength",
       "releaseDate": "2023-06-30",
+      "preorder": false,
       "image": "/products/OP-03.png",
       "variants": [
         {
@@ -86,6 +89,7 @@
       "category": "OP",
       "name": "Kingdoms of Intrigue",
       "releaseDate": "2023-09-22",
+      "preorder": false,
       "image": "/products/OP-04.png",
       "variants": [
         {
@@ -108,6 +112,7 @@
       "category": "OP",
       "name": "Awakening of the New Era",
       "releaseDate": "2023-12-08",
+      "preorder": false,
       "image": "/products/OP-05.png",
       "variants": [
         {
@@ -130,6 +135,7 @@
       "category": "OP",
       "name": "Wings of the Captain",
       "releaseDate": "2024-03-08",
+      "preorder": false,
       "image": "/products/OP-06.png",
       "variants": [
         {
@@ -152,6 +158,7 @@
       "category": "OP",
       "name": "500 Years in the Future",
       "releaseDate": "2024-06-28",
+      "preorder": false,
       "image": "/products/OP-07.png",
       "variants": [
         {
@@ -174,6 +181,7 @@
       "category": "OP",
       "name": "Two Legends",
       "releaseDate": "2024-09-13",
+      "preorder": false,
       "image": "/products/OP-08.png",
       "variants": [
         {
@@ -196,6 +204,7 @@
       "category": "OP",
       "name": "Emperors in the New World",
       "releaseDate": "2024-11-08",
+      "preorder": false,
       "image": "/products/OP-09.png",
       "variants": [
         {
@@ -218,6 +227,7 @@
       "category": "OP",
       "name": "Royal Blood",
       "releaseDate": "2025-02-14",
+      "preorder": false,
       "image": "/products/OP-10.png",
       "variants": [
         {
@@ -240,6 +250,7 @@
       "category": "OP",
       "name": "A Fist of Divine Speed",
       "releaseDate": "2025-05-30",
+      "preorder": false,
       "image": "/products/OP-11.png",
       "variants": [
         {
@@ -262,6 +273,7 @@
       "category": "OP",
       "name": "Legacy of the Master",
       "releaseDate": "2025-08-29",
+      "preorder": false,
       "image": "/products/OP-12.png",
       "variants": [
         {
@@ -284,6 +296,7 @@
       "category": "OP",
       "name": "Carrying On His Will",
       "releaseDate": "2025-11-21",
+      "preorder": false,
       "image": "/products/OP-13.png",
       "variants": [
         {
@@ -306,6 +319,7 @@
       "category": "OP",
       "name": "The Azure Sea's Seven",
       "releaseDate": "2026-02-13",
+      "preorder": false,
       "image": "/products/OP-14.png",
       "variants": [
         {
@@ -328,6 +342,7 @@
       "category": "OP",
       "name": "Adventure on Kami's Island",
       "releaseDate": "2026-05-29",
+      "preorder": false,
       "image": "/products/OP-15.png",
       "variants": [
         {
@@ -350,6 +365,7 @@
       "category": "OP",
       "name": "The Time of Battle",
       "releaseDate": "2026-08-28",
+      "preorder": false,
       "image": "/products/OP-16.png",
       "variants": [
         {
@@ -372,6 +388,7 @@
       "category": "EB",
       "name": "Extra Booster: Memorial Collection",
       "releaseDate": "2024-03-29",
+      "preorder": false,
       "image": "/products/EB-01.png",
       "variants": [
         {
@@ -394,6 +411,7 @@
       "category": "EB",
       "name": "Extra Booster: Anime 25th Collection",
       "releaseDate": "2025-04-25",
+      "preorder": false,
       "image": "/products/EB-02.png",
       "variants": [
         {
@@ -407,6 +425,52 @@
           "label": "Sealed Case (12 boxes)",
           "price": 5616,
           "stock": 3
+        }
+      ]
+    },
+    {
+      "id": "OP-17",
+      "code": "OP-17",
+      "category": "OP",
+      "name": "The World's Strongest Warriors",
+      "releaseDate": null,
+      "preorder": true,
+      "image": "/products/OP-17.svg",
+      "variants": [
+        {
+          "id": "OP-17:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 99
+        },
+        {
+          "id": "OP-17:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 99
+        }
+      ]
+    },
+    {
+      "id": "OP-18",
+      "code": "OP-18",
+      "category": "OP",
+      "name": "To Be Announced",
+      "releaseDate": null,
+      "preorder": true,
+      "image": "/products/OP-18.svg",
+      "variants": [
+        {
+          "id": "OP-18:box",
+          "label": "Booster Box (24 packs)",
+          "price": 690,
+          "stock": 99
+        },
+        {
+          "id": "OP-18:case",
+          "label": "Sealed Case (12 boxes)",
+          "price": 7452,
+          "stock": 99
         }
       ]
     }

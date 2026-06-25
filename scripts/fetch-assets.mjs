@@ -80,6 +80,13 @@ const RELEASE_DATES = {
 // EB extra boosters to feature.
 const EB_CODES = ["EB-01", "EB-02"];
 
+// Upcoming OP sets offered as pre-orders. Box art is fetched automatically when
+// it becomes available; until then a designed black-box placeholder is used.
+const PREORDERS = [
+  { code: "OP-17", category: "OP", name: "The World's Strongest Warriors", preorder: true },
+  { code: "OP-18", category: "OP", name: "To Be Announced", preorder: true },
+];
+
 const CATEGORIES = [
   {
     key: "OP",
@@ -144,7 +151,7 @@ function mockStock(code, variantKey) {
 }
 
 /** Build the two purchase variants for a product, with HKD prices + mock stock. */
-function buildVariants(code, category) {
+function buildVariants(code, category, preorder = false) {
   const m = vintageMult(code);
   const base = category === "EB" ? 520 : 690;
   const box = Math.round(base * m);
@@ -157,7 +164,8 @@ function buildVariants(code, category) {
     id: `${code}:${d.key}`,
     label: d.label,
     price: d.price,
-    stock: mockStock(code, d.key),
+    // Pre-orders are always orderable (no sell-out); released sets get mock stock.
+    stock: preorder ? 99 : mockStock(code, d.key),
   }));
 }
 
@@ -266,6 +274,70 @@ async function downloadCover(code, name, jpBoxIndex) {
   return "jp-placeholder";
 }
 
+/**
+ * Download a pre-order cover to public/products/{code}.(png|svg):
+ *   1. the real Japanese booster box if it has been released (feed or official),
+ *   2. otherwise a designed black-box placeholder (SVG).
+ * Returns { image, tag }.
+ */
+async function downloadPreorderCover(code, name, jpBoxIndex) {
+  const pngDest = path.join(PRODUCTS_DIR, `${code}.png`);
+
+  const boxUrl = jpBoxIndex && jpBoxIndex[code];
+  if (boxUrl && (await tryDownload(boxUrl, pngDest, 5))) {
+    return { image: `/products/${code}.png`, tag: "jp-box" };
+  }
+  if (await tryDownload(`${JP_SITE}/images/products/boosters/${jpSlug(code)}/img_thumbnail.png`, pngDest)) {
+    return { image: `/products/${code}.png`, tag: "jp-product" };
+  }
+
+  const svgDest = path.join(PRODUCTS_DIR, `${code}.svg`);
+  await writeFile(svgDest, preorderBoxSvg(code, name));
+  return { image: `/products/${code}.svg`, tag: "preorder-placeholder" };
+}
+
+/** A designed "black box" placeholder for an unreleased (pre-order) set. */
+function preorderBoxSvg(code, name) {
+  const showName = name && !/^to be announced$/i.test(name);
+  const safeName = String(showName ? name : "Artwork revealed soon")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;");
+  return Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-label="${code} pre-order placeholder">
+  <defs>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c2c31"/>
+      <stop offset="0.55" stop-color="#101012"/>
+      <stop offset="1" stop-color="#020203"/>
+    </linearGradient>
+    <linearGradient id="foil" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9c7a35"/>
+      <stop offset="0.5" stop-color="#f1d585"/>
+      <stop offset="1" stop-color="#9c7a35"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="#ffffff"/>
+  <!-- depth side face -->
+  <path d="M402 120 L432 138 L432 502 L402 520 Z" fill="#000" stroke="url(#foil)" stroke-width="2"/>
+  <!-- box front -->
+  <rect x="172" y="108" width="232" height="412" rx="12" fill="url(#box)" stroke="url(#foil)" stroke-width="3"/>
+  <!-- set code -->
+  <text x="288" y="178" fill="url(#foil)" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="800" text-anchor="middle" letter-spacing="1">${code}</text>
+  <!-- mystery mark -->
+  <text x="288" y="330" fill="#3a3a42" font-family="Georgia, serif" font-size="190" font-weight="800" text-anchor="middle">?</text>
+  <!-- wordmark -->
+  <text x="288" y="404" fill="#f7f5ee" font-family="Georgia, serif" font-size="40" font-weight="800" text-anchor="middle" letter-spacing="2">ONE PIECE</text>
+  <text x="288" y="430" fill="url(#foil)" font-family="Georgia, serif" font-size="16" text-anchor="middle" letter-spacing="7">CARD GAME</text>
+  <!-- pre-order ribbon -->
+  <rect x="172" y="462" width="232" height="40" fill="url(#foil)"/>
+  <text x="288" y="490" fill="#0a0a0b" font-family="Georgia, serif" font-size="22" font-weight="800" text-anchor="middle" letter-spacing="4">PRE-ORDER</text>
+  <!-- caption -->
+  <text x="300" y="556" fill="#8a6a2f" font-family="Georgia, serif" font-size="19" font-style="italic" text-anchor="middle">${safeName}</text>
+</svg>`,
+    "utf8",
+  );
+}
+
 function placeholderSvg(code, name) {
   const safe = String(name || code).replace(/&/g, "&amp;").replace(/</g, "&lt;");
   return Buffer.from(
@@ -314,15 +386,29 @@ async function main() {
     name: setNameById.get(code) || code,
   }));
 
-  const releases = [...opEntries, ...ebEntries];
+  const releases = [...opEntries, ...ebEntries, ...PREORDERS];
 
-  console.log(`Selected ${opEntries.length} OP, ${ebEntries.length} EB = ${releases.length} products.`);
+  console.log(
+    `Selected ${opEntries.length} OP, ${ebEntries.length} EB, ${PREORDERS.length} pre-order = ${releases.length} products.`,
+  );
   console.log("Downloading Japanese cover art ...");
 
-  const tally = { "jp-box": 0, "jp-product": 0, "jp-card": 0, "jp-placeholder": 0 };
+  const tally = {
+    "jp-box": 0,
+    "jp-product": 0,
+    "jp-card": 0,
+    "jp-placeholder": 0,
+    "preorder-placeholder": 0,
+  };
   const products = [];
   for (const r of releases) {
-    const tag = await downloadCover(r.code, r.name, jpBoxIndex);
+    let image, tag;
+    if (r.preorder) {
+      ({ image, tag } = await downloadPreorderCover(r.code, r.name, jpBoxIndex));
+    } else {
+      tag = await downloadCover(r.code, r.name, jpBoxIndex);
+      image = `/products/${r.code}.png`;
+    }
     tally[tag]++;
     products.push({
       id: r.code,
@@ -330,8 +416,9 @@ async function main() {
       category: r.category,
       name: r.name,
       releaseDate: RELEASE_DATES[r.code] || null,
-      image: `/products/${r.code}.png`,
-      variants: buildVariants(r.code, r.category),
+      preorder: r.preorder || false,
+      image,
+      variants: buildVariants(r.code, r.category, r.preorder),
     });
     process.stdout.write(`  ${r.code} (${tag})\n`);
   }
@@ -342,7 +429,8 @@ async function main() {
   await writeFile(CATALOG_PATH, JSON.stringify(catalog, null, 2) + "\n", "utf8");
 
   console.log(
-    `\nDone. JP covers: box=${tally["jp-box"]} product=${tally["jp-product"]} card=${tally["jp-card"]} placeholder=${tally["jp-placeholder"]}`,
+    `\nDone. JP covers: box=${tally["jp-box"]} product=${tally["jp-product"]} card=${tally["jp-card"]}` +
+      ` placeholder=${tally["jp-placeholder"]} preorder=${tally["preorder-placeholder"]}`,
   );
   console.log(`Catalog written: ${path.relative(ROOT, CATALOG_PATH)} (${products.length} products)`);
 }
